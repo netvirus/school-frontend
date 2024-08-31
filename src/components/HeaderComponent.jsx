@@ -2,13 +2,12 @@ import React from 'react';
 
 const HeaderComponent = () => {
     return (
-        <div className="fixed-top">
-            <header>
-                <nav className="navbar navbar-dark bg-dark">
-                    <a className="navbar-brand" href="#">Books management system</a>
-                </nav>
-            </header>
-        </div>
+        <header className="header">
+            <nav className="navbar navbar-dark bg-primary w-100">
+                <h2 className="text-center">School management system</h2>
+            </nav>
+        </header>
     );
 }
+
 export default HeaderComponent;
