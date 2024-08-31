@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { addBookService } from "../../servicea/BookService.js";
+import { addBook } from "../../servicea/BookService.js";
 import { useNavigate } from "react-router-dom";
 
-const AddBookComponent = () => {
+const AddStudentComponent = () => {
 
-    const [bookName, setBookName] = useState('');
-    const [isColor, setColor] = useState('Yes'); // Дефолтное значение 'Yes'
-    const [bookUnit, setBookUnit] = useState();
-    const [bookGrade, setBookGrade] = useState();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [age, setAge] = useState(0);
+    const [gender, setGender] = useState('');
+    const [nationality, setNationality] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [grade, setGrade] = useState('');
+    const [motherName, setMotherName] = useState('');
+    const [fatherName, setFatherName] = useState('');
+    const [motherPhoneNumber, setMotherPhoneNumber] = useState('');
+    const [fatherPhoneNumber, setFatherPhoneNumber] = useState('');
 
     const navigator = useNavigate();
 
@@ -16,7 +24,7 @@ const AddBookComponent = () => {
 
         const newBook = { name: bookName, color: isColor, unit: bookUnit, grade: bookGrade };
         console.log(newBook);
-        addBookService(newBook).then((response) => {
+        addBook(newBook).then((response) => {
             console.log(response.data);
             navigator("/api/books");
         });
@@ -113,4 +121,4 @@ const AddBookComponent = () => {
     );
 }
 
-export default AddBookComponent;
+export default AddStudentComponent;

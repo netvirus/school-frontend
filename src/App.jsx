@@ -1,10 +1,12 @@
 import './App.css'
-import ListBookComponent from "./components/list/ListBookComponent.jsx";
+import ListBooksComponent from "./components/list/ListBooksComponent.jsx";
 import HeaderComponent from "./components/HeaderComponent.jsx";
 import FooterComponent from "./components/FooterComponent.jsx";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePageComponent from "./components/HomePageComponent.jsx";
 import AddBookComponent from "./components/add/AddBookComponent.jsx";
+import ListTeachersComponent from "./components/list/ListTeachersComponent.jsx";
+import AddTeacherComponent from "./components/add/AddTeacherComponent.jsx";
 
 function App() {
     return (
@@ -14,8 +16,10 @@ function App() {
                 <main className="container">
                     <Routes>
                         <Route path='/' element={<HomePageComponent />} />
-                        <Route path='/api/books' element={<ListBookComponent />} />
+                        <Route path='/api/books' element={<ListBooksComponent />} />
                         <Route path='/api/books/add-book' element={<AddBookComponent />} />
+                        <Route path='/api/teachers' element={<ListTeachersComponent />} />
+                        <Route path='/api/teachers/add-teacher' element={<AddTeacherComponent />} />
                     </Routes>
                 </main>
                 <FooterComponent />

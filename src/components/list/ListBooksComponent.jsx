@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { listBooks } from "../../servicea/BookService.js";
 import { useNavigate } from "react-router-dom";
 
-const ListBookComponent = () => {
+const ListBooksComponent = () => {
 
     const [books, setBooks] = useState([])
 
@@ -66,4 +66,4 @@ const ListBookComponent = () => {
     )
 }
 
-export default ListBookComponent;
+export default ListBooksComponent;
