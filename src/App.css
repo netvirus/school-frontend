@@ -3,12 +3,34 @@ html, body, #root, .app-container {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Отступы вокруг формы */
+}
+
+.card {
   width: 100%;
-  padding: 0 15px;
+  max-width: 600px; /* Ограничиваем максимальную ширину */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  border-radius: 8px; /* Скругленные углы */
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  width: 100%; /* Добавляем ширину 100% для row */
+  align-items: center; /* Центрируем содержимое в row */
+  justify-content: center; /* Центрирование содержимого */
+  padding: 10px 0; /* Отступы для каждого ряда */
 }
 
 .header, .footer {
@@ -20,8 +42,5 @@ html, body, #root, .app-container {
   color: white;
   text-align: center;
   padding: 1rem;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
 }

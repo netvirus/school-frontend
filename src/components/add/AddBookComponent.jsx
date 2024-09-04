@@ -31,7 +31,7 @@ const AddBookComponent = () => {
     }
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <div className="row justify-content-center">
                 <div className="card col-md-8">
                     <h2 className="text-center mt-3">Add new book</h2>
