@@ -21,12 +21,20 @@ const ListBooksComponent = () => {
         navigator('/api/books/add-book');
     }
 
+    function editBook(book) {
+        navigator('/api/books/add-book');
+    }
+
+    function deleteBook(book) {
+        navigator('/api/books/add-book');
+    }
+
     function backToHome() {
         navigator('/');
     }
 
     return (
-        <div className="container mt-5 d-flex flex-column align-items-center">
+        <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">List of Books</h2>
 
             <div className="mb-3">
@@ -42,6 +50,7 @@ const ListBooksComponent = () => {
                         <th>Color</th>
                         <th>Unit</th>
                         <th>Grade</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,7 +62,24 @@ const ListBooksComponent = () => {
                                 <td>{book.color}</td>
                                 <td>{book.unit}</td>
                                 <td>{book.grade}</td>
-                            </tr>)
+                                <td>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary me-2"
+                                        onClick={() => editBook(book.id)} // Обработчик события Edit
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger"
+                                        onClick={() => deleteBook(book.id)} // Обработчик события Delete
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        )
                     }
                     </tbody>
                 </table>
@@ -63,7 +89,7 @@ const ListBooksComponent = () => {
                 <button type="button" className="btn btn-primary" onClick={backToHome}>Back to Home</button>
             </div>
         </div>
-    )
+    );
 }
 
 export default ListBooksComponent;
