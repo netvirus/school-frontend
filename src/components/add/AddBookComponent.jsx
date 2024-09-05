@@ -5,21 +5,62 @@ import { useNavigate } from "react-router-dom";
 const AddBookComponent = () => {
 
     const [bookName, setBookName] = useState('');
-    const [isColor, setColor] = useState('Yes'); // Дефолтное значение 'Yes'
+    const [isColor, setColor] = useState('Yes');
     const [bookUnit, setBookUnit] = useState();
     const [bookGrade, setBookGrade] = useState();
+
+    // Проверка формы
+    const [errors, setErrors] = useState({
+        bookName: '',
+        bookUnit: '',
+        bookGrade: ''
+    })
 
     const navigator = useNavigate();
 
     function saveBook(e) {
         e.preventDefault();
 
-        const newBook = { name: bookName, color: isColor, unit: bookUnit, grade: bookGrade };
-        console.log(newBook);
-        addBookService(newBook).then((response) => {
-            console.log(response.data);
-            navigator("/api/books");
-        });
+        if (validateForm()) {
+            const newBook = {name: bookName, color: isColor, unit: bookUnit, grade: bookGrade};
+            console.log(newBook);
+            addBookService(newBook).then((response) => {
+                console.log(response.data);
+                navigator("/api/books");
+            });
+        }
+    }
+
+
+// Валидация полей
+    function validateForm() {
+        let valid = true;
+
+        const errorsCopy = {... errors}
+
+        if (bookName.trim()) {
+            errorsCopy.bookName = '';
+        } else {
+            errorsCopy.bookName = 'Book name is required';
+            valid = false;
+        }
+
+        if (bookUnit) {
+            errorsCopy.bookUnit = '';
+        } else {
+            errorsCopy.bookUnit = 'Unit number is required';
+            valid = false;
+        }
+
+        if (bookGrade) {
+            errorsCopy.bookGrade = '';
+        } else {
+            errorsCopy.bookGrade = 'Grade number is required';
+            valid = false;
+        }
+
+        setErrors(errorsCopy);
+        return valid;
     }
 
     function backToList() {
@@ -43,10 +84,12 @@ const AddBookComponent = () => {
                                     type="text"
                                     placeholder="Enter book name"
                                     name="bookName"
-                                    className="form-control"
                                     value={bookName}
+                                    className={`form-control ${ errors.bookName ? 'is-invalid': '' } `}
                                     onChange={(e) => setBookName(e.target.value)}
-                                />
+                                >
+                                </input>
+                                { errors.bookName && <div className="invalid-feedback">{ errors.bookName }</div> }
                             </div>
 
                             <div className="form-group mb-3">
@@ -82,10 +125,12 @@ const AddBookComponent = () => {
                                     type="number"
                                     placeholder="Enter book unit"
                                     name="bookUnit"
-                                    className="form-control"
                                     value={bookUnit}
+                                    className={`form-control ${ errors.bookUnit ? 'is-invalid': '' } `}
                                     onChange={(e) => setBookUnit(e.target.value)}
-                                />
+                                >
+                                </input>
+                                { errors.bookUnit && <div className="invalid-feedback">{ errors.bookUnit }</div> }
                             </div>
 
                             <div className="form-group mb-4">
@@ -94,10 +139,12 @@ const AddBookComponent = () => {
                                     type="number"
                                     placeholder="Enter book grade"
                                     name="bookGrade"
-                                    className="form-control"
+                                    className={`form-control ${ errors.bookGrade ? 'is-invalid': '' } `}
                                     value={bookGrade}
                                     onChange={(e) => setBookGrade(e.target.value)}
-                                />
+                                >
+                                </input>
+                                { errors.bookGrade && <div className="invalid-feedback">{ errors.bookGrade }</div> }
                             </div>
 
                             <div className="text-center">
