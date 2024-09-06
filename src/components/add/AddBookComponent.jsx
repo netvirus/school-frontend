@@ -9,7 +9,7 @@ const AddBookComponent = () => {
     const [bookUnit, setBookUnit] = useState();
     const [bookGrade, setBookGrade] = useState();
 
-    const (id) = useParams();
+    const {id} = useParams();
 
     // Проверка формы
     const [errors, setErrors] = useState({
@@ -74,6 +74,8 @@ const AddBookComponent = () => {
 
     function pageTitle() {
         if (id) {
+            return <h2 className="text-center mt-3">Update the book</h2>
+        } else {
             return <h2 className="text-center mt-3">Add new book</h2>
         }
     }
@@ -82,7 +84,9 @@ const AddBookComponent = () => {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="card col-md-8">
-                    <h2 className="text-center mt-3">Add new book</h2>
+                    {
+                        pageTitle()
+                    }
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-3">
