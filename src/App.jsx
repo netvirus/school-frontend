@@ -18,6 +18,8 @@ function App() {
                         <Route path='/' element={<HomePageComponent />} />
                         <Route path='/api/books' element={<ListBooksComponent />} />
                         <Route path='/api/books/add-book' element={<AddBookComponent />} />
+                        <Route path='/api/books/edit-book/:id' element={<AddBookComponent />} />
+                        <Route path='/api/books/delete-book/:id' element={<ListBooksComponent />} />
                         <Route path='/api/teachers' element={<ListTeachersComponent />} />
                         <Route path='/api/teachers/add-teacher' element={<AddTeacherComponent />} />
                     </Routes>

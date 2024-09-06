@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { addBookService } from "../../servicea/BookService.js";
-import { useNavigate } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const AddBookComponent = () => {
 
@@ -8,6 +8,8 @@ const AddBookComponent = () => {
     const [isColor, setColor] = useState('Yes');
     const [bookUnit, setBookUnit] = useState();
     const [bookGrade, setBookGrade] = useState();
+
+    const (id) = useParams();
 
     // Проверка формы
     const [errors, setErrors] = useState({
@@ -30,7 +32,6 @@ const AddBookComponent = () => {
             });
         }
     }
-
 
 // Валидация полей
     function validateForm() {
@@ -69,6 +70,12 @@ const AddBookComponent = () => {
 
     function backToHome() {
         navigator("/");
+    }
+
+    function pageTitle() {
+        if (id) {
+            return <h2 className="text-center mt-3">Add new book</h2>
+        }
     }
 
     return (

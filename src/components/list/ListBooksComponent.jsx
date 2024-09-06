@@ -21,12 +21,12 @@ const ListBooksComponent = () => {
         navigator('/api/books/add-book');
     }
 
-    function editBook(book) {
-        navigator('/api/books/add-book');
+    function editBook(id) {
+        navigator(`/api/books/edit-book/${id}`);
     }
 
-    function deleteBook(book) {
-        navigator('/api/books/add-book');
+    function deleteBook(id) {
+        navigator(`/api/books/delete-book/${id}`);
     }
 
     function backToHome() {
@@ -66,14 +66,14 @@ const ListBooksComponent = () => {
                                     <button
                                         type="button"
                                         className="btn btn-outline-secondary me-2"
-                                        onClick={() => editBook(book.id)} // Обработчик события Edit
+                                        onClick={() => editBook(book.id)}
                                     >
                                         Edit
                                     </button>
                                     <button
                                         type="button"
                                         className="btn btn-outline-danger"
-                                        onClick={() => deleteBook(book.id)} // Обработчик события Delete
+                                        onClick={() => deleteBook(book.id)}
                                     >
                                         Delete
                                     </button>
