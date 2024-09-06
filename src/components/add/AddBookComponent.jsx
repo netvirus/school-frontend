@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { addBookService } from "../../servicea/BookService.js";
+import React, {useEffect, useState} from 'react';
+import {addBookService, getBookByIdService, updateBookService} from "../../servicea/BookService.js";
 import {useNavigate, useParams} from "react-router-dom";
 
 const AddBookComponent = () => {
@@ -20,16 +20,41 @@ const AddBookComponent = () => {
 
     const navigator = useNavigate();
 
+    useEffect(() => {
+        if (id) {
+            getBookByIdService(id).then((response) => {
+                setBookName(response.data.name);
+                setColor(response.data.color);
+                setBookUnit(response.data.unit);
+                setBookGrade(response.data.grade);
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+    }, [id])
+
     function saveBook(e) {
         e.preventDefault();
+        const newBook = {name: bookName, color: isColor, unit: bookUnit, grade: bookGrade};
+        console.log(newBook);
 
         if (validateForm()) {
-            const newBook = {name: bookName, color: isColor, unit: bookUnit, grade: bookGrade};
-            console.log(newBook);
-            addBookService(newBook).then((response) => {
-                console.log(response.data);
-                navigator("/api/books");
-            });
+
+            if (id) {
+                updateBookService(id, book).then((response) => {
+                    console.log(response.data);
+                    navigator("/api/books");
+                }).catch(error => {
+                    console.error(error);
+                })
+            } else {
+                addBookService(newBook).then((response) => {
+                    console.log(response.data);
+                    navigator("/api/books");
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
         }
     }
 
