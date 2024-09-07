@@ -8,7 +8,8 @@ const ListBooksComponent = () => {
 
     useEffect(() => {
         listBooks().then((response) => {
-            setBooks(response.data);
+            const sortedBooks = response.data.sort((a, b) => a.id - b.id);
+            setBooks(sortedBooks);
         }).catch(error => {
             console.error(error);
         })
@@ -43,7 +44,16 @@ const ListBooksComponent = () => {
 
     return (
         <div className="container d-flex flex-column align-items-center">
-            <h2 className="text-center mb-4">List of Books</h2>
+            <h2 className="text-center mb-4">
+                List of Books
+                <i
+                    className="bi bi-info-circle custom-tooltip"
+                    style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="This is the list of all available books in the school"
+                ></i>
+            </h2>
 
             <div className="mb-3">
                 <button type="button" className="btn btn-primary" onClick={addNewBook}>Add Book</button>

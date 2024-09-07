@@ -44,3 +44,15 @@ html, body, #root, .app-container {
   padding: 1rem;
   flex-shrink: 0;
 }
+
+/* Кастомизация тултипа */
+.custom-tooltip .tooltip-inner {
+  background-color: #f0f0f0; /* Светло-серый фон */
+  color: #000; /* Черный текст */
+  border: 1px solid #ccc; /* Серая рамка */
+}
+
+.custom-tooltip .tooltip-arrow {
+  border-top-color: #f0f0f0 !important; /* Для верхней стрелки */
+  border-bottom-color: #f0f0f0 !important; /* Для нижней стрелки */
+}
