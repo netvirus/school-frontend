@@ -33,7 +33,7 @@ const AddBookComponent = () => {
         }
     }, [id])
 
-    function saveBook(e) {
+    function saveUpdateBook(e) {
         e.preventDefault();
         const newBook = {name: bookName, color: isColor, unit: bookUnit, grade: bookGrade};
         console.log(newBook);
@@ -102,6 +102,14 @@ const AddBookComponent = () => {
             return <h2 className="text-center mt-3">Update the book</h2>
         } else {
             return <h2 className="text-center mt-3">Add new book</h2>
+        }
+    }
+
+    function saveOrUpdateButton() {
+        if (id) {
+            return <button type="button" className="btn btn-primary me-2" onClick={saveUpdateBook}>Update</button>
+        } else {
+            return <button type="button" className="btn btn-primary me-2" onClick={saveUpdateBook}>Save</button>
         }
     }
 
@@ -184,7 +192,9 @@ const AddBookComponent = () => {
                             </div>
 
                             <div className="text-center">
-                                <button type="button" className="btn btn-primary me-2" onClick={saveBook}>Save</button>
+                                {
+                                    saveOrUpdateButton()
+                                }
                                 <button type="button" className="btn btn-primary me-2" onClick={backToList}>Back</button>
                                 <button type="button" className="btn btn-primary me-2" onClick={backToHome}>Back to Home</button>
                             </div>
