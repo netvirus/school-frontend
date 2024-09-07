@@ -33,22 +33,22 @@ const AddBookComponent = () => {
         }
     }, [id])
 
-    function saveUpdateBook(e) {
+    function saveOrUpdateBook(e) {
         e.preventDefault();
-        const newBook = {name: bookName, color: isColor, unit: bookUnit, grade: bookGrade};
-        console.log(newBook);
+        const _book = {name: bookName, color: isColor, unit: bookUnit, grade: bookGrade};
+        console.log(_book);
 
         if (validateForm()) {
 
             if (id) {
-                updateBookService(id, book).then((response) => {
+                updateBookService(id, _book).then((response) => {
                     console.log(response.data);
                     navigator("/api/books");
                 }).catch(error => {
                     console.error(error);
                 })
             } else {
-                addBookService(newBook).then((response) => {
+                addBookService(_book).then((response) => {
                     console.log(response.data);
                     navigator("/api/books");
                 }).catch(error => {
@@ -107,9 +107,9 @@ const AddBookComponent = () => {
 
     function saveOrUpdateButton() {
         if (id) {
-            return <button type="button" className="btn btn-primary me-2" onClick={saveUpdateBook}>Update</button>
+            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateBook}>Update</button>
         } else {
-            return <button type="button" className="btn btn-primary me-2" onClick={saveUpdateBook}>Save</button>
+            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateBook}>Save</button>
         }
     }
 
