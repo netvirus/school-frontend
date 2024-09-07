@@ -35,7 +35,6 @@ const ListBooksComponent = () => {
                 console.error(error);
             })
         }
-        // navigator('/api/books');
     }
 
     function backToHome() {

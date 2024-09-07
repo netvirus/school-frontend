@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listTeachers } from "../../servicea/TeacherService.js";
 import { useNavigate } from "react-router-dom";
+import {deleteBookService} from "../../servicea/BookService.js";
 
 const ListTeachersComponent = () => {
 
@@ -8,7 +9,8 @@ const ListTeachersComponent = () => {
 
     useEffect(() => {
         listTeachers().then((response) => {
-            setTeachers(response.data);
+            const sortedTeachers = response.data.sort((a, b) => a.id - b.id);
+            setTeachers(sortedTeachers);
         }).catch(error => {
             console.error(error);
         })
@@ -25,9 +27,33 @@ const ListTeachersComponent = () => {
         navigator('/');
     }
 
+    function editTeacher(id) {
+        navigator(`/api/teachers/edit-teacher/${id}`);
+    }
+
+    function deleteTeacher(id) {
+        if (id) {
+            deleteTeacherService(id).then((response) => {
+                console.log(response.data);
+                setBooks((prevTeacher) => prevTeacher.filter(teacher => teacher.id !== id));
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+    }
+
     return (
-        <div className="container mt-5 d-flex flex-column align-items-center">
-            <h2 className="text-center mb-4">List of Teachers</h2>
+        <div className="container mt-1 d-flex flex-column align-items-center">
+            <h2 className="text-center mb-4">
+                List of Teachers
+                <i
+                    className="bi bi-info-circle custom-tooltip"
+                    style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="This is the list of all teachers in the school"
+                ></i>
+            </h2>
 
             <div className="mb-3">
                 <button type="button" className="btn btn-primary" onClick={addNewTeacher}>Add Teacher</button>
@@ -47,6 +73,7 @@ const ListTeachersComponent = () => {
                         <th>Address</th>
                         <th>Subject</th>
                         <th>Grade</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -63,6 +90,22 @@ const ListTeachersComponent = () => {
                                 <td>{teacher.address}</td>
                                 <td>{teacher.subject}</td>
                                 <td>{teacher.grade}</td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary me-2"
+                                        onClick={() => editTeacher(teacher.id)}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger"
+                                        onClick={() => deleteTeacher(teacher.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>)
                     }
                     </tbody>
