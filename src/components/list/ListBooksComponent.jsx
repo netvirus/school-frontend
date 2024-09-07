@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { listBooks } from "../../servicea/BookService.js";
+import {deleteBookService, listBooks, updateBookService} from "../../servicea/BookService.js";
 import { useNavigate } from "react-router-dom";
 
 const ListBooksComponent = () => {
@@ -26,7 +26,15 @@ const ListBooksComponent = () => {
     }
 
     function deleteBook(id) {
-        navigator(`/api/books/delete-book/${id}`);
+        if (id) {
+            deleteBookService(id).then((response) => {
+                console.log(response.data);
+                setBooks((prevBooks) => prevBooks.filter(book => book.id !== id));
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+        // navigator('/api/books');
     }
 
     function backToHome() {
