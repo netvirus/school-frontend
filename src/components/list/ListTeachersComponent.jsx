@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listTeachers } from "../../servicea/TeacherService.js";
 import { useNavigate } from "react-router-dom";
-import {deleteBookService} from "../../servicea/BookService.js";
+import { deleteTeacherService } from "../../servicea/BookService.js";
 
 const ListTeachersComponent = () => {
 
@@ -35,7 +35,7 @@ const ListTeachersComponent = () => {
         if (id) {
             deleteTeacherService(id).then((response) => {
                 console.log(response.data);
-                setBooks((prevTeacher) => prevTeacher.filter(teacher => teacher.id !== id));
+                setTeachers((prevTeacher) => prevTeacher.filter(teacher => teacher.id !== id));
             }).catch(error => {
                 console.error(error);
             })
