@@ -59,7 +59,7 @@ const ListTeachersComponent = () => {
                 <button type="button" className="btn btn-primary" onClick={addNewTeacher}>Add Teacher</button>
             </div>
 
-            <div className="table-responsive w-100">
+            <div className="table-responsive">
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>

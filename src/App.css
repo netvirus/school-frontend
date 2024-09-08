@@ -1,40 +1,22 @@
 html, body, #root, .app-container {
   height: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
 .container {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px; /* Отступы вокруг формы */
+  width: 100%; /* Полная ширина для контейнера */
+  display: block; /* Избегаем использования flex для контейнера */
+  padding: 20px; /* Отступы вокруг таблицы */
+  max-width: none; /* Убираем ограничение на ширину */
 }
 
 .card {
   width: 100%;
-  max-width: 600px; /* Ограничиваем максимальную ширину */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
   border-radius: 8px; /* Скругленные углы */
-}
-
-.row {
-  display: flex;
-  flex-direction: column;
-  width: 100%; /* Добавляем ширину 100% для row */
-  align-items: center; /* Центрируем содержимое в row */
-  justify-content: center; /* Центрирование содержимого */
-  padding: 10px 0; /* Отступы для каждого ряда */
-}
-
-.header, .footer {
-  width: 100%;
 }
 
 .footer {
@@ -45,7 +27,6 @@ html, body, #root, .app-container {
   flex-shrink: 0;
 }
 
-/* Кастомизация тултипа */
 .custom-tooltip .tooltip-inner {
   background-color: #f0f0f0; /* Светло-серый фон */
   color: #000; /* Черный текст */
@@ -55,4 +36,15 @@ html, body, #root, .app-container {
 .custom-tooltip .tooltip-arrow {
   border-top-color: #f0f0f0 !important; /* Для верхней стрелки */
   border-bottom-color: #f0f0f0 !important; /* Для нижней стрелки */
+}
+
+.table {
+  width: 100%; /* Устанавливаем ширину 100% для таблицы */
+  table-layout: auto; /* Позволяем таблице автоматически растягиваться */
+}
+
+.table th, .table td {
+  white-space: nowrap; /* Избегаем переноса текста */
+  text-overflow: ellipsis; /* Добавляем троеточие, если текст выходит за рамки */
+  overflow: hidden; /* Обрезаем текст, если не помещается */
 }
