@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { listTeachers } from "../../servicea/TeacherService.js";
 import { useNavigate } from "react-router-dom";
-import { deleteTeacherService } from "../../servicea/BookService.js";
+import { deleteTeacherService } from "../../servicea/TeacherService.js";
 
 const ListTeachersComponent = () => {
 
