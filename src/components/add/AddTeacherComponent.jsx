@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import {addTeacherService} from "../../servicea/TeacherService.js";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import {addTeacherService, getTeacherByIdService, updateTeacherService} from "../../servicea/TeacherService.js";
 
 const AddTeacherComponent = () => {
 
@@ -14,12 +14,45 @@ const AddTeacherComponent = () => {
     const [subject, setSubject] = useState('');
     const [grade, setGrade] = useState('');
 
+    const {id} = useParams();
+
+    // Проверка формы
+    const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
+        age: '',
+        gender: '',
+        nationality: '',
+        phoneNumber: '',
+        address: '',
+        subject: '',
+        grade: ''
+    })
+
     const navigator = useNavigate();
 
-    function saveTeacher(e) {
+    useEffect(() => {
+        if (id) {
+            getTeacherByIdService(id).then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setAge(response.data.age);
+                setGender(response.data.gender);
+                setNationality(response.data.nationality);
+                setPhoneNumber(response.data.phoneNumber);
+                setAddress(response.data.address);
+                setSubject(response.data.subject);
+                setGrade(response.data.grade);
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+    }, [id])
+
+    function saveOrUpdateTeacher(e) {
         e.preventDefault();
 
-        const newTeacher = {
+        const _teacher = {
             firstName: firstName,
             lastName: lastName,
             age: age,
@@ -30,11 +63,99 @@ const AddTeacherComponent = () => {
             subject: subject,
             grade: grade
         };
-        console.log(newTeacher);
-        addTeacherService(newTeacher).then((response) => {
-            console.log(response.data);
-            navigator("/api/teachers");
-        });
+        console.log(_teacher);
+
+        if (validateForm()) {
+
+            if (id) {
+                updateTeacherService(id, _teacher).then((response) => {
+                    console.log(response.data);
+                    navigator("/api/teachers");
+                }).catch(error => {
+                    console.error(error);
+                })
+            } else {
+                addTeacherService(_teacher).then((response) => {
+                    console.log(response.data);
+                    navigator("/api/teachers");
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+        }
+    }
+
+    // Валидация полей
+    function validateForm() {
+        let valid = true;
+
+        const errorsCopy = {... errors}
+
+        if (firstName.trim()) {
+            errorsCopy.firstName = '';
+        } else {
+            errorsCopy.firstName = 'First name is required';
+            valid = false;
+        }
+
+        if (lastName.trim()) {
+            errorsCopy.lastName = '';
+        } else {
+            errorsCopy.lastName = 'Last name is required';
+            valid = false;
+        }
+
+        if (age) {
+            errorsCopy.age = '';
+        } else {
+            errorsCopy.age = 'Age number is required';
+            valid = false;
+        }
+
+        if (gender.trim()) {
+            errorsCopy.gender = '';
+        } else {
+            errorsCopy.gender = 'Gender is required';
+            valid = false;
+        }
+
+        if (nationality.trim()) {
+            errorsCopy.nationality = '';
+        } else {
+            errorsCopy.nationality = 'Nationality is required';
+            valid = false;
+        }
+
+        if (phoneNumber.trim()) {
+            errorsCopy.phoneNumber = '';
+        } else {
+            errorsCopy.phoneNumber = 'PhoneNumber is required';
+            valid = false;
+        }
+
+        if (address.trim()) {
+            errorsCopy.address = '';
+        } else {
+            errorsCopy.address = 'Address is required';
+            valid = false;
+        }
+
+        if (subject.trim()) {
+            errorsCopy.subject = '';
+        } else {
+            errorsCopy.subject = 'Subject is required';
+            valid = false;
+        }
+
+        if (grade.trim()) {
+            errorsCopy.grade = '';
+        } else {
+            errorsCopy.grade = 'Grade is required';
+            valid = false;
+        }
+
+        setErrors(errorsCopy);
+        return valid;
     }
 
     function backToList() {
@@ -45,11 +166,29 @@ const AddTeacherComponent = () => {
         navigator("/");
     }
 
+    function pageTitle() {
+        if (id) {
+            return <h2 className="text-center mt-3">Update the Teacher</h2>
+        } else {
+            return <h2 className="text-center mt-3">Add new Teacher</h2>
+        }
+    }
+
+    function saveOrUpdateButton() {
+        if (id) {
+            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateTeacher}>Update</button>
+        } else {
+            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateTeacher}>Save</button>
+        }
+    }
+
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="card col-md-8">
-                    <h2 className="text-center mt-3">Add new teacher</h2>
+                    {
+                        pageTitle()
+                    }
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-3">
@@ -57,11 +196,12 @@ const AddTeacherComponent = () => {
                                 <input
                                     type="text"
                                     placeholder="First name"
-                                    name="bookName"
-                                    className="form-control"
+                                    name="firstName"
+                                    className={`form-control ${ errors.bookName ? 'is-invalid': '' } `}
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
+                                { errors.firstName && <div className="invalid-feedback">{ errors.ferstName }</div> }
                             </div>
 
                             <div className="form-group mb-3">
@@ -177,8 +317,9 @@ const AddTeacherComponent = () => {
                             </div>
 
                             <div className="text-center">
-                                <button type="button" className="btn btn-primary me-2" onClick={saveTeacher}>Save
-                                </button>
+                                {
+                                    saveOrUpdateButton()
+                                }
                                 <button type="button" className="btn btn-primary me-2" onClick={backToList}>Back
                                 </button>
                                 <button type="button" className="btn btn-primary me-2" onClick={backToHome}>Back to
