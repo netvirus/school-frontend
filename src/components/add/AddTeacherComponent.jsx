@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import {addTeacherService, getTeacherByIdService, updateTeacherService} from "../../servicea/TeacherService.js";
 
@@ -197,11 +197,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="First name"
                                     name="firstName"
-                                    className={`form-control ${ errors.bookName ? 'is-invalid': '' } `}
+                                    className={`form-control ${ errors.firstName ? 'is-invalid': '' } `}
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
                                 />
-                                { errors.firstName && <div className="invalid-feedback">{ errors.ferstName }</div> }
+                                { errors.firstName && <div className="invalid-feedback">{ errors.firstName }</div> }
                             </div>
 
                             <div className="form-group mb-3">
@@ -210,10 +210,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="Last name"
                                     name="lastName"
-                                    className="form-control"
+                                    className={`form-control ${ errors.lastName ? 'is-invalid': '' } `}
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
                                 />
+                                { errors.lastName && <div className="invalid-feedback">{ errors.lastName }</div> }
                             </div>
 
                             <div className="form-group mb-3">
@@ -222,10 +223,11 @@ const AddTeacherComponent = () => {
                                     type="number"
                                     placeholder="age"
                                     name="age"
-                                    className="form-control"
+                                    className={`form-control ${ errors.age ? 'is-invalid': '' } `}
                                     value={age}
-                                    onChange={(e) => setAge(e.target.value)}
+                                    onChange={(e) => setAge(Number(e.target.value))}
                                 />
+                                { errors.age && <div className="invalid-feedback">{ errors.age }</div> }
                             </div>
 
                             <div className="form-group mb-3">
@@ -262,10 +264,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="Enter nationality"
                                     name="nationality"
-                                    className="form-control"
+                                    className={`form-control ${ errors.nationality ? 'is-invalid': '' } `}
                                     value={nationality}
                                     onChange={(e) => setNationality(e.target.value)}
                                 />
+                                { errors.nationality && <div className="invalid-feedback">{ errors.nationality }</div> }
                             </div>
 
                             <div className="form-group mb-4">
@@ -274,10 +277,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="Enter phone number"
                                     name="phoneNumber"
-                                    className="form-control"
+                                    className={`form-control ${ errors.phoneNumber ? 'is-invalid': '' } `}
                                     value={phoneNumber}
                                     onChange={(e) => setPhoneNumber(e.target.value)}
                                 />
+                                { errors.phoneNumber && <div className="invalid-feedback">{ errors.phoneNumber }</div> }
                             </div>
 
                             <div className="form-group mb-4">
@@ -286,10 +290,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="Enter an address"
                                     name="address"
-                                    className="form-control"
+                                    className={`form-control ${ errors.address ? 'is-invalid': '' } `}
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                 />
+                                { errors.address && <div className="invalid-feedback">{ errors.address }</div> }
                             </div>
 
                             <div className="form-group mb-4">
@@ -298,10 +303,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="Enter subject"
                                     name="subject"
-                                    className="form-control"
+                                    className={`form-control ${ errors.subject ? 'is-invalid': '' } `}
                                     value={subject}
                                     onChange={(e) => setSubject(e.target.value)}
                                 />
+                                { errors.subject && <div className="invalid-feedback">{ errors.subject }</div> }
                             </div>
 
                             <div className="form-group mb-4">
@@ -310,10 +316,11 @@ const AddTeacherComponent = () => {
                                     type="text"
                                     placeholder="Enter grade"
                                     name="grade"
-                                    className="form-control"
+                                    className={`form-control ${ errors.grade ? 'is-invalid': '' } `}
                                     value={grade}
                                     onChange={(e) => setGrade(e.target.value)}
                                 />
+                                { errors.grade && <div className="invalid-feedback">{ errors.grade }</div> }
                             </div>
 
                             <div className="text-center">
