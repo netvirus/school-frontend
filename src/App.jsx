@@ -22,6 +22,7 @@ function App() {
                         <Route path='/api/books/delete-book/:id' element={<ListBooksComponent />} />
                         <Route path='/api/teachers' element={<ListTeachersComponent />} />
                         <Route path='/api/teachers/add-teacher' element={<AddTeacherComponent />} />
+                        <Route path='/api/teachers/edit-teacher/:id' element={<AddTeacherComponent />} />
                     </Routes>
                 </main>
                 <FooterComponent />
