@@ -6,8 +6,8 @@ const AddStudentComponent = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [age, setAge] = useState(0);
-    const [gender, setGender] = useState('');
+    const [age, setAge] = useState();
+    const [gender, setGender] = useState('Male');
     const [nationality, setNationality] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
@@ -86,7 +86,7 @@ const AddStudentComponent = () => {
                 })
             } else {
                 addStudentService(_student).then((response) => {
-                    console.log(response.data);
+                    console.log("New data is: " + response.data);
                 }).catch(error => {
                     console.error(error);
                 });
@@ -387,7 +387,7 @@ const AddStudentComponent = () => {
                                     placeholder="Enter father's phone number"
                                     name="fatherPhoneNumber"
                                     className={`form-control ${errors.fatherPhoneNumber ? 'is-invalid' : ''} `}
-                                    value={motherPhoneNumber}
+                                    value={fatherPhoneNumber}
                                     onChange={(e) => setFatherPhoneNumber(e.target.value)}
                                 />
                                 {errors.fatherPhoneNumber && <div className="invalid-feedback">{errors.fatherPhoneNumber}</div>}

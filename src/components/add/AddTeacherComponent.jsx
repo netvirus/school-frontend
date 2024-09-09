@@ -6,8 +6,8 @@ const AddTeacherComponent = () => {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [age, setAge] = useState(0);
-    const [gender, setGender] = useState('');
+    const [age, setAge] = useState();
+    const [gender, setGender] = useState('Female');
     const [nationality, setNationality] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [address, setAddress] = useState('');
