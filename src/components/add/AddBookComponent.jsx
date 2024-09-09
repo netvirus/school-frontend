@@ -39,22 +39,20 @@ const AddBookComponent = () => {
         console.log(_book);
 
         if (validateForm()) {
-
             if (id) {
                 updateBookService(id, _book).then((response) => {
                     console.log(response.data);
-                    navigator("/api/books");
                 }).catch(error => {
                     console.error(error);
                 })
             } else {
                 addBookService(_book).then((response) => {
                     console.log(response.data);
-                    navigator("/api/books");
                 }).catch(error => {
                     console.error(error);
                 });
             }
+            navigator("/books");
         }
     }
 
@@ -90,7 +88,7 @@ const AddBookComponent = () => {
     }
 
     function backToList() {
-        navigator("/api/books");
+        navigator("/books");
     }
 
     function backToHome() {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {deleteBookService, listBooks, updateBookService} from "../../servicea/BookService.js";
+import { useEffect, useState } from "react";
+import { deleteBookService, listBooks } from "../../servicea/BookService.js";
 import { useNavigate } from "react-router-dom";
 
 const ListBooksComponent = () => {
@@ -19,11 +19,11 @@ const ListBooksComponent = () => {
     const navigator = useNavigate();
 
     function addNewBook() {
-        navigator('/api/books/add-book');
+        navigator('/books/add-book');
     }
 
     function editBook(id) {
-        navigator(`/api/books/edit-book/${id}`);
+        navigator(`/books/edit-book/${id}`);
     }
 
     function deleteBook(id) {

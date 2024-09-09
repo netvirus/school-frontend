@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { addBook } from "../../servicea/BookService.js";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from 'react';
+import {addStudentService, getStudentByIdService, updateStudentService} from "../../servicea/StudentService.js";
+import {useNavigate, useParams} from "react-router-dom";
 
 const AddStudentComponent = () => {
 
@@ -17,101 +17,391 @@ const AddStudentComponent = () => {
     const [motherPhoneNumber, setMotherPhoneNumber] = useState('');
     const [fatherPhoneNumber, setFatherPhoneNumber] = useState('');
 
+    const {id} = useParams();
+
+    // Проверка формы
+    const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
+        age: '',
+        gender: '',
+        nationality: '',
+        phoneNumber: '',
+        address: '',
+        grade: '',
+        motherName: '',
+        fatherName: '',
+        motherPhoneNumber: '',
+        fatherPhoneNumber: ''
+    })
+
     const navigator = useNavigate();
 
-    function saveBook(e) {
+    useEffect(() => {
+        if (id) {
+            getStudentByIdService(id).then((response) => {
+                setFirstName(response.data.firstName);
+                setLastName(response.data.lastName);
+                setAge(response.data.age);
+                setGender(response.data.gender);
+                setNationality(response.data.nationality);
+                setPhoneNumber(response.data.phoneNumber);
+                setAddress(response.data.address);
+                setGrade(response.data.grade);
+                setMotherName(response.data.motherName);
+                setFatherName(response.data.fatherName);
+                setMotherPhoneNumber(response.data.motherPhoneNumber);
+                setFatherPhoneNumber(response.data.fatherPhoneNumber);
+            }).catch(error => {
+                console.error(error);
+            })
+        }
+    }, [id])
+
+    function saveOrUpdateStudent(e) {
         e.preventDefault();
 
-        const newBook = { name: bookName, color: isColor, unit: bookUnit, grade: bookGrade };
-        console.log(newBook);
-        addBook(newBook).then((response) => {
-            console.log(response.data);
-            navigator("/api/books");
-        });
+        const _student = {
+            firstName: firstName,
+            lastName: lastName,
+            age: age,
+            gender: gender,
+            nationality: nationality,
+            phoneNumber: phoneNumber,
+            address: address,
+            grade: grade,
+            motherName: motherName,
+            fatherName: fatherName,
+            motherPhoneNumber: motherPhoneNumber,
+            fatherPhoneNumber: fatherPhoneNumber
+        };
+        console.log(_student);
+
+        if (validateForm()) {
+            if (id) {
+                updateStudentService(id, _student).then((response) => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.error(error);
+                })
+            } else {
+                addStudentService(_student).then((response) => {
+                    console.log(response.data);
+                }).catch(error => {
+                    console.error(error);
+                });
+            }
+            navigator("/students");
+        }
+    }
+
+    // Валидация полей
+    function validateForm() {
+        let valid = true;
+
+        const errorsCopy = {... errors}
+
+        if (firstName.trim()) {
+            errorsCopy.firstName = '';
+        } else {
+            errorsCopy.firstName = 'First name is required';
+            valid = false;
+        }
+
+        if (lastName.trim()) {
+            errorsCopy.lastName = '';
+        } else {
+            errorsCopy.lastName = 'Last name is required';
+            valid = false;
+        }
+
+        if (age) {
+            errorsCopy.age = '';
+        } else {
+            errorsCopy.age = 'Age number is required';
+            valid = false;
+        }
+
+        if (gender.trim()) {
+            errorsCopy.gender = '';
+        } else {
+            errorsCopy.gender = 'Gender is required';
+            valid = false;
+        }
+
+        if (nationality.trim()) {
+            errorsCopy.nationality = '';
+        } else {
+            errorsCopy.nationality = 'Nationality is required';
+            valid = false;
+        }
+
+        if (phoneNumber.trim()) {
+            errorsCopy.phoneNumber = '';
+        } else {
+            errorsCopy.phoneNumber = 'PhoneNumber is required';
+            valid = false;
+        }
+
+        if (address.trim()) {
+            errorsCopy.address = '';
+        } else {
+            errorsCopy.address = 'Address is required';
+            valid = false;
+        }
+
+        if (grade.trim()) {
+            errorsCopy.grade = '';
+        } else {
+            errorsCopy.grade = 'Grade is required';
+            valid = false;
+        }
+
+        if (motherName.trim()) {
+            errorsCopy.motherName = '';
+        } else {
+            errorsCopy.motherName = 'Mother name is required';
+            valid = false;
+        }
+
+        if (fatherName.trim()) {
+            errorsCopy.fatherName = '';
+        } else {
+            errorsCopy.fatherName = 'Father name is required';
+            valid = false;
+        }
+
+        if (motherPhoneNumber.trim()) {
+            errorsCopy.motherPhoneNumber = '';
+        } else {
+            errorsCopy.motherPhoneNumber = 'Mother phone number is required';
+            valid = false;
+        }
+
+        if (fatherPhoneNumber.trim()) {
+            errorsCopy.fatherPhoneNumber = '';
+        } else {
+            errorsCopy.fatherPhoneNumber = 'Father phone number is required';
+            valid = false;
+        }
+
+        setErrors(errorsCopy);
+        return valid;
     }
 
     function backToList() {
-        navigator("/api/books");
+        navigator("/students");
     }
 
     function backToHome() {
         navigator("/");
     }
 
+    function pageTitle() {
+        if (id) {
+            return <h2 className="text-center mt-3">Update the Student</h2>
+        } else {
+            return <h2 className="text-center mt-3">Add new Student</h2>
+        }
+    }
+
+    function saveOrUpdateButton() {
+        if (id) {
+            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateStudent}>Update</button>
+        } else {
+            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateStudent}>Save</button>
+        }
+    }
+
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="card col-md-8">
-                    <h2 className="text-center mt-3">Add new book</h2>
+                    {
+                        pageTitle()
+                    }
                     <div className="card-body">
                         <form>
                             <div className="form-group mb-3">
-                                <label className="form-label font-weight-bold">Book name:</label>
+                                <label className="form-label font-weight-bold">First name:</label>
                                 <input
                                     type="text"
-                                    placeholder="Enter book name"
-                                    name="bookName"
-                                    className="form-control"
-                                    value={bookName}
-                                    onChange={(e) => setBookName(e.target.value)}
+                                    placeholder="First name"
+                                    name="firstName"
+                                    className={`form-control ${errors.firstName ? 'is-invalid' : ''} `}
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
                                 />
+                                {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
                             </div>
 
                             <div className="form-group mb-3">
-                                <label className="form-label font-weight-bold">Is book color (Yes/No)?</label>
-                                <div className="btn-group mt-2 d-flex" role="group" aria-label="Basic radio toggle button group">
+                                <label className="form-label font-weight-bold">Last name:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Last name"
+                                    name="lastName"
+                                    className={`form-control ${errors.lastName ? 'is-invalid' : ''} `}
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                                {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
+                            </div>
+
+                            <div className="form-group mb-3">
+                                <label className="form-label font-weight-bold">Age:</label>
+                                <input
+                                    type="number"
+                                    placeholder="age"
+                                    name="age"
+                                    className={`form-control ${errors.age ? 'is-invalid' : ''} `}
+                                    value={age}
+                                    onChange={(e) => setAge(Number(e.target.value))}
+                                />
+                                {errors.age && <div className="invalid-feedback">{errors.age}</div>}
+                            </div>
+
+                            <div className="form-group mb-3">
+                                <label className="form-label font-weight-bold">Gender</label>
+                                <div className="btn-group mt-2 d-flex" role="group"
+                                     aria-label="Basic radio toggle button group">
                                     <input
                                         type="radio"
                                         className="btn-check"
                                         name="btnradio"
                                         id="btnradio1"
                                         autoComplete="off"
-                                        value="Yes"
+                                        value="Male"
                                         defaultChecked
-                                        onChange={(e) => setColor(e.target.value)}
+                                        onChange={(e) => setGender(e.target.value)}
                                     />
-                                    <label className="btn btn-outline-primary" htmlFor="btnradio1">Yes</label>
+                                    <label className="btn btn-outline-primary" htmlFor="btnradio1">Male</label>
                                     <input
                                         type="radio"
                                         className="btn-check"
                                         name="btnradio"
                                         id="btnradio2"
                                         autoComplete="off"
-                                        value="No"
-                                        onChange={(e) => setColor(e.target.value)}
+                                        value="Female"
+                                        onChange={(e) => setGender(e.target.value)}
                                     />
-                                    <label className="btn btn-outline-primary" htmlFor="btnradio2">No</label>
+                                    <label className="btn btn-outline-primary" htmlFor="btnradio2">Female</label>
                                 </div>
                             </div>
 
-                            <div className="form-group mb-3">
-                                <label className="form-label font-weight-bold">Book unit:</label>
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Nationality:</label>
                                 <input
-                                    type="number"
-                                    placeholder="Enter book unit"
-                                    name="bookUnit"
-                                    className="form-control"
-                                    value={bookUnit}
-                                    onChange={(e) => setBookUnit(e.target.value)}
+                                    type="text"
+                                    placeholder="Enter nationality"
+                                    name="nationality"
+                                    className={`form-control ${errors.nationality ? 'is-invalid' : ''} `}
+                                    value={nationality}
+                                    onChange={(e) => setNationality(e.target.value)}
                                 />
+                                {errors.nationality && <div className="invalid-feedback">{errors.nationality}</div>}
                             </div>
 
                             <div className="form-group mb-4">
-                                <label className="form-label font-weight-bold">Book grade:</label>
+                                <label className="form-label font-weight-bold">Phone number:</label>
                                 <input
-                                    type="number"
-                                    placeholder="Enter book grade"
-                                    name="bookGrade"
-                                    className="form-control"
-                                    value={bookGrade}
-                                    onChange={(e) => setBookGrade(e.target.value)}
+                                    type="text"
+                                    placeholder="Enter phone number"
+                                    name="phoneNumber"
+                                    className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''} `}
+                                    value={phoneNumber}
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
                                 />
+                                {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
+                            </div>
+
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Address:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter an address"
+                                    name="address"
+                                    className={`form-control ${errors.address ? 'is-invalid' : ''} `}
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                />
+                                {errors.address && <div className="invalid-feedback">{errors.address}</div>}
+                            </div>
+
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Grade:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter grade"
+                                    name="grade"
+                                    className={`form-control ${errors.grade ? 'is-invalid' : ''} `}
+                                    value={grade}
+                                    onChange={(e) => setGrade(e.target.value)}
+                                />
+                                {errors.grade && <div className="invalid-feedback">{errors.grade}</div>}
+                            </div>
+
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Mother name:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter mother name"
+                                    name="motherName"
+                                    className={`form-control ${errors.motherName ? 'is-invalid' : ''} `}
+                                    value={motherName}
+                                    onChange={(e) => setMotherName(e.target.value)}
+                                />
+                                {errors.motherName && <div className="invalid-feedback">{errors.motherName}</div>}
+                            </div>
+
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Father name:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter father name"
+                                    name="fatherName"
+                                    className={`form-control ${errors.fatherName ? 'is-invalid' : ''} `}
+                                    value={fatherName}
+                                    onChange={(e) => setFatherName(e.target.value)}
+                                />
+                                {errors.fatherName && <div className="invalid-feedback">{errors.fatherName}</div>}
+                            </div>
+
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Mother's phone number:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter mother's phone number"
+                                    name="motherPhoneNumber"
+                                    className={`form-control ${errors.motherPhoneNumber ? 'is-invalid' : ''} `}
+                                    value={motherPhoneNumber}
+                                    onChange={(e) => setMotherPhoneNumber(e.target.value)}
+                                />
+                                {errors.motherPhoneNumber && <div className="invalid-feedback">{errors.motherPhoneNumber}</div>}
+                            </div>
+
+                            <div className="form-group mb-4">
+                                <label className="form-label font-weight-bold">Father's phone number:</label>
+                                <input
+                                    type="text"
+                                    placeholder="Enter father's phone number"
+                                    name="fatherPhoneNumber"
+                                    className={`form-control ${errors.fatherPhoneNumber ? 'is-invalid' : ''} `}
+                                    value={motherPhoneNumber}
+                                    onChange={(e) => setFatherPhoneNumber(e.target.value)}
+                                />
+                                {errors.fatherPhoneNumber && <div className="invalid-feedback">{errors.fatherPhoneNumber}</div>}
                             </div>
 
                             <div className="text-center">
-                                <button type="button" className="btn btn-primary me-2" onClick={saveBook}>Save</button>
-                                <button type="button" className="btn btn-primary me-2" onClick={backToList}>Back</button>
-                                <button type="button" className="btn btn-primary me-2" onClick={backToHome}>Back to Home</button>
+                                {
+                                    saveOrUpdateButton()
+                                }
+                                <button type="button" className="btn btn-primary me-2" onClick={backToList}>Back
+                                </button>
+                                <button type="button" className="btn btn-primary me-2" onClick={backToHome}>Back to
+                                    Home
+                                </button>
                             </div>
                         </form>
                     </div>

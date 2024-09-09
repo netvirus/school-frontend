@@ -66,22 +66,20 @@ const AddTeacherComponent = () => {
         console.log(_teacher);
 
         if (validateForm()) {
-
             if (id) {
                 updateTeacherService(id, _teacher).then((response) => {
                     console.log(response.data);
-                    navigator("/api/teachers");
                 }).catch(error => {
                     console.error(error);
                 })
             } else {
                 addTeacherService(_teacher).then((response) => {
                     console.log(response.data);
-                    navigator("/api/teachers");
                 }).catch(error => {
                     console.error(error);
                 });
             }
+            navigator("/teachers");
         }
     }
 
@@ -159,7 +157,7 @@ const AddTeacherComponent = () => {
     }
 
     function backToList() {
-        navigator("/api/teachers");
+        navigator("/teachers");
     }
 
     function backToHome() {

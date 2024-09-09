@@ -7,6 +7,8 @@ import HomePageComponent from "./components/HomePageComponent.jsx";
 import AddBookComponent from "./components/add/AddBookComponent.jsx";
 import ListTeachersComponent from "./components/list/ListTeachersComponent.jsx";
 import AddTeacherComponent from "./components/add/AddTeacherComponent.jsx";
+import AddStudentComponent from "./components/add/AddStudentComponent.jsx";
+import ListStudentsComponent from "./components/list/ListStudentsComponent.jsx";
 
 function App() {
     return (
@@ -16,13 +18,16 @@ function App() {
                 <main className="container">
                     <Routes>
                         <Route path='/' element={<HomePageComponent />} />
-                        <Route path='/api/books' element={<ListBooksComponent />} />
-                        <Route path='/api/books/add-book' element={<AddBookComponent />} />
-                        <Route path='/api/books/edit-book/:id' element={<AddBookComponent />} />
-                        <Route path='/api/books/delete-book/:id' element={<ListBooksComponent />} />
-                        <Route path='/api/teachers' element={<ListTeachersComponent />} />
-                        <Route path='/api/teachers/add-teacher' element={<AddTeacherComponent />} />
-                        <Route path='/api/teachers/edit-teacher/:id' element={<AddTeacherComponent />} />
+                        <Route path='/books' element={<ListBooksComponent />} />
+                        <Route path='/books/add-book' element={<AddBookComponent />} />
+                        <Route path='/books/edit-book/:id' element={<AddBookComponent />} />
+                        <Route path='/books/delete-book/:id' element={<ListBooksComponent />} />
+                        <Route path='/teachers' element={<ListTeachersComponent />} />
+                        <Route path='/teachers/add-teacher' element={<AddTeacherComponent />} />
+                        <Route path='/teachers/edit-teacher/:id' element={<AddTeacherComponent />} />
+                        <Route path='/students' element={<ListStudentsComponent />} />
+                        <Route path='/students/add-student' element={<AddStudentComponent />} />
+                        <Route path='/students/edit-student/:id' element={<AddStudentComponent />} />
                     </Routes>
                 </main>
                 <FooterComponent />

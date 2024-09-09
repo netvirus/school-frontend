@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { listTeachers } from "../../servicea/TeacherService.js";
+import { listStudents } from "../../servicea/StudentService.js";
 import { useNavigate } from "react-router-dom";
-import { deleteTeacherService } from "../../servicea/TeacherService.js";
+import { deleteStudentService } from "../../servicea/StudentService.js";
 
-const ListTeachersComponent = () => {
+const ListStudentsComponent = () => {
 
-    const [teachers, setTeachers] = useState([])
+    const [students, setStudents] = useState([])
 
     useEffect(() => {
-        listTeachers().then((response) => {
-            const sortedTeachers = response.data.sort((a, b) => a.id - b.id);
-            setTeachers(sortedTeachers);
+        listStudents().then((response) => {
+            const sortedStudents = response.data.sort((a, b) => a.id - b.id);
+            setStudents(sortedStudents);
         }).catch(error => {
             console.error(error);
         })
@@ -19,23 +19,23 @@ const ListTeachersComponent = () => {
 
     const navigator = useNavigate();
 
-    function addNewTeacher() {
-        navigator('/teachers/add-teacher');
+    function addNewStudent() {
+        navigator('/students/add-student');
     }
 
     function backToHome() {
         navigator('/');
     }
 
-    function editTeacher(id) {
-        navigator(`/teachers/edit-teacher/${id}`);
+    function editStudent(id) {
+        navigator(`/students/edit-student/${id}`);
     }
 
-    function deleteTeacher(id) {
+    function deleteStudent(id) {
         if (id) {
-            deleteTeacherService(id).then((response) => {
+            deleteStudentService(id).then((response) => {
                 console.log(response.data);
-                setTeachers((prevTeacher) => prevTeacher.filter(teacher => teacher.id !== id));
+                setStudents((prevStudent) => prevStudent.filter(student => student.id !== id));
             }).catch(error => {
                 console.error(error);
             })
@@ -45,18 +45,18 @@ const ListTeachersComponent = () => {
     return (
         <div className="container mt-1 d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
-                List of Teachers
+                List of Students
                 <i
                     className="bi bi-info-circle custom-tooltip"
                     style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="This is the list of all teachers in the school"
+                    title="This is the list of all students in the school"
                 ></i>
             </h2>
 
             <div className="mb-3">
-                <button type="button" className="btn btn-primary" onClick={addNewTeacher}>Add Teacher</button>
+                <button type="button" className="btn btn-primary" onClick={addNewStudent}>Add Student</button>
             </div>
 
             <div className="table-responsive">
@@ -71,37 +71,43 @@ const ListTeachersComponent = () => {
                         <th>Nationality</th>
                         <th>Phone Number</th>
                         <th>Address</th>
-                        <th>Subject</th>
                         <th>Grade</th>
+                        <th>Mother name</th>
+                        <th>Father name</th>
+                        <th>Mother's phone</th>
+                        <th>Father's number</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        teachers.map(teacher =>
-                            <tr key={teacher.id}>
-                                <td>{teacher.id}</td>
-                                <td>{teacher.firstName}</td>
-                                <td>{teacher.lastName}</td>
-                                <td>{teacher.age}</td>
-                                <td>{teacher.gender}</td>
-                                <td>{teacher.nationality}</td>
-                                <td>{teacher.phoneNumber}</td>
-                                <td>{teacher.address}</td>
-                                <td>{teacher.subject}</td>
-                                <td>{teacher.grade}</td>
+                        students.map(student =>
+                            <tr key={student.id}>
+                                <td>{student.id}</td>
+                                <td>{student.firstName}</td>
+                                <td>{student.lastName}</td>
+                                <td>{student.age}</td>
+                                <td>{student.gender}</td>
+                                <td>{student.nationality}</td>
+                                <td>{student.phoneNumber}</td>
+                                <td>{student.address}</td>
+                                <td>{student.grade}</td>
+                                <td>{student.motherName}</td>
+                                <td>{student.fatherName}</td>
+                                <td>{student.motherPhoneNumber}</td>
+                                <td>{student.fatherPhoneNumber}</td>
                                 <td>
                                     <button
                                         type="button"
                                         className="btn btn-outline-secondary me-2"
-                                        onClick={() => editTeacher(teacher.id)}
+                                        onClick={() => editStudent(student.id)}
                                     >
                                         Edit
                                     </button>
                                     <button
                                         type="button"
                                         className="btn btn-outline-danger"
-                                        onClick={() => deleteTeacher(teacher.id)}
+                                        onClick={() => deleteStudent(student.id)}
                                     >
                                         Delete
                                     </button>
@@ -119,4 +125,4 @@ const ListTeachersComponent = () => {
     )
 }
 
-export default ListTeachersComponent;
+export default ListStudentsComponent;
