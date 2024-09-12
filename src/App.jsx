@@ -9,6 +9,7 @@ import ListTeachersComponent from "./components/list/ListTeachersComponent.jsx";
 import AddTeacherComponent from "./components/add/AddTeacherComponent.jsx";
 import AddStudentComponent from "./components/add/AddStudentComponent.jsx";
 import ListStudentsComponent from "./components/list/ListStudentsComponent.jsx";
+import FinancialReportComponent from "./components/reports/FinancialReportComponent.jsx";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                         <Route path='/students' element={<ListStudentsComponent />} />
                         <Route path='/students/add-student' element={<AddStudentComponent />} />
                         <Route path='/students/edit-student/:id' element={<AddStudentComponent />} />
+                        <Route path='/reports/finance' element={<FinancialReportComponent />} />
                     </Routes>
                 </main>
                 <FooterComponent />
