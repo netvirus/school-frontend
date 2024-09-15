@@ -4,6 +4,10 @@ const HomePageComponent = () => {
 
     const navigator = useNavigate();
 
+    function listBasePriceItems() {
+        navigator("/academic-year-base-prices");
+    }
+
     function listPaymentItems() {
         navigator("/payment-items");
     }
@@ -26,7 +30,10 @@ const HomePageComponent = () => {
     return (
         <div className="container mt-5">
             <div className="text-center">
-                <button type="button" className="btn btn-primary me-2" onClick={listPaymentItems}>List payment items</button>
+                <button type="button" className="btn btn-primary me-2" onClick={listBasePriceItems}>List base price items
+                </button>
+                <button type="button" className="btn btn-primary me-2" onClick={listPaymentItems}>List payment items
+                </button>
                 <button type="button" className="btn btn-primary me-2" onClick={listStudents}>List of Students</button>
                 <button type="button" className="btn btn-primary me-2" onClick={listTeachers}>List of Teachers</button>
                 <button type="button" className="btn btn-primary me-2" onClick={listBooks}>List of Books</button>

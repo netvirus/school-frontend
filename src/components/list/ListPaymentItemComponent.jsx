@@ -44,13 +44,13 @@ const ListPaymentItemComponent = () => {
     return (
         <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
-                List of Books
+                List of Payment Items
                 <i
                     className="bi bi-info-circle custom-tooltip"
                     style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="This is the list of all available books in the school"
+                    title="This is the list of all available payment items"
                 ></i>
             </h2>
 
@@ -64,6 +64,7 @@ const ListPaymentItemComponent = () => {
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
