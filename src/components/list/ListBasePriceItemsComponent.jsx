@@ -1,25 +1,16 @@
 import { useEffect, useState } from "react";
-import { deleteAcademicYearBasePriceService, listAcademicYearBasePrices } from "../../servicea/AcademicYearBasePriceItemService.js";
-import { listPaymentItems } from "../../servicea/PaymentItemService.js";
-import {useLocation, useNavigate} from "react-router-dom";
+import { deleteBasePriceService, listBasePrices } from "../../servicea/BasePriceItemService.js";
+import { useNavigate } from "react-router-dom";
 
-const ListAcademicYearBasePriceItemsComponent = () => {
+const ListBasePriceItemsComponent = () => {
 
     const [basePrice, setBasePrice] = useState([]);
-    const [paymentItems, setPaymentItems] = useState([]); // Состояние для платёжных элементов
     const navigator = useNavigate();
-    const location = useLocation();
 
     const loadData = () => {
-        listAcademicYearBasePrices().then((response) => {
+        listBasePrices().then((response) => {
             const sortedBasePrices = response.data.sort((a, b) => a.id - b.id);
             setBasePrice(sortedBasePrices);
-        }).catch(error => {
-            console.error(error);
-        });
-
-        listPaymentItems().then((response) => {
-            setPaymentItems(response.data);
         }).catch(error => {
             console.error(error);
         });
@@ -43,19 +34,13 @@ const ListAcademicYearBasePriceItemsComponent = () => {
 
     function deleteBasePriceitem(id) {
         if (id) {
-            deleteAcademicYearBasePriceService(id).then((response) => {
+            deleteBasePriceService(id).then((response) => {
                 console.log(response.data);
                 setBasePrice((prevPrice) => prevPrice.filter(item => item.id !== id));
             }).catch(error => {
                 console.error(error);
             })
         }
-    }
-
-    // Функция для получения имени платёжного элемента по его ID
-    function getPaymentItemName(paymentItemId) {
-        const paymentItem = paymentItems.find(item => item.id === paymentItemId);
-        return paymentItem ? paymentItem.name : "Unknown";
     }
 
     function backToHome() {
@@ -65,7 +50,7 @@ const ListAcademicYearBasePriceItemsComponent = () => {
     return (
         <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
-                List of Base price items
+                List of base price items
                 <i
                     className="bi bi-info-circle custom-tooltip"
                     style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
@@ -83,7 +68,7 @@ const ListAcademicYearBasePriceItemsComponent = () => {
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Grade Name</th>
                         <th>Payment Item Name</th>
                         <th>Price</th>
                         <th>Actions</th>
@@ -93,8 +78,8 @@ const ListAcademicYearBasePriceItemsComponent = () => {
                     {
                         basePrice.map(item =>
                             <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td>{getPaymentItemName(item.paymentItemId)}</td>
+                                <td>{item.gradeName}</td>
+                                <td>{item.paymentItemName}</td>
                                 <td>{item.paymentItemPrice}</td>
                                 <td>
                                     <button
@@ -126,4 +111,4 @@ const ListAcademicYearBasePriceItemsComponent = () => {
     );
 }
 
-export default ListAcademicYearBasePriceItemsComponent;
+export default ListBasePriceItemsComponent;

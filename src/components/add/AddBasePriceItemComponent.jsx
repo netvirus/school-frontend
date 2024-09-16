@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
-import { addAcademicYearBasePriceService, getAcademicYearBasePriceByIdService, updateAcademicYearBasePriceService } from "../../servicea/AcademicYearBasePriceItemService.js";
+import { addBasePriceService, getBasePriceByIdService, updateBasePriceService } from "../../servicea/BasePriceItemService.js";
 import { listPaymentItems } from "../../servicea/PaymentItemService.js";
+import { listGrades } from "../../servicea/GradeService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
-const AddAcademicYearBasePriceItemComponent = () => {
+const AddBasePriceItemComponent = () => {
 
     const [priceYear, setPriceYear] = useState(2024);
-    const [paymentItemId, setPaymentItemId] = useState();
-    const [paymentItemPrice, setPaymentItemPrice] = useState();
+    const [gradeId, setGradeId] = useState('');
+    const [grades, setGrades] = useState([]);
+    const [paymentItemId, setPaymentItemId] = useState('');
     const [paymentItems, setPaymentItems] = useState([]);
+    const [paymentItemPrice, setPaymentItemPrice] = useState('');
 
-    const {id} = useParams();
+    const { id } = useParams();
 
     const [errors, setErrors] = useState({
         priceYear: '',
+        gradeId: '',
         paymentItemId: '',
         paymentItemPrice: ''
     });
@@ -22,14 +26,22 @@ const AddAcademicYearBasePriceItemComponent = () => {
 
     useEffect(() => {
         if (id) {
-            getAcademicYearBasePriceByIdService(id).then((response) => {
+            getBasePriceByIdService(id).then((response) => {
                 setPriceYear(response.data.priceYear);
+                setGradeId(response.data.gradeId);
                 setPaymentItemId(response.data.paymentItemId);
                 setPaymentItemPrice(response.data.paymentItemPrice);
             }).catch(error => {
                 console.error(error);
             });
         }
+
+        // Получаем список имен грейдов
+        listGrades().then((response) => {
+            setGrades(response.data);
+        }).catch(error => {
+            console.error(error);
+        });
 
         // Получаем список платёжных элементов
         listPaymentItems().then((response) => {
@@ -44,6 +56,7 @@ const AddAcademicYearBasePriceItemComponent = () => {
         e.preventDefault();
         const _personalPrice = {
             priceYear: priceYear,
+            gradeId: gradeId,
             paymentItemId: paymentItemId,
             paymentItemPrice: paymentItemPrice
         };
@@ -51,13 +64,13 @@ const AddAcademicYearBasePriceItemComponent = () => {
 
         if (validateForm()) {
             if (id) {
-                updateAcademicYearBasePriceService(id, _personalPrice).then((response) => {
+                updateBasePriceService(id, _personalPrice).then((response) => {
                     console.log(response.data);
                 }).catch(error => {
                     console.error(error);
                 });
             } else {
-                addAcademicYearBasePriceService(_personalPrice).then((response) => {
+                addBasePriceService(_personalPrice).then((response) => {
                     console.log(response.data);
                 }).catch(error => {
                     console.error(error);
@@ -76,6 +89,13 @@ const AddAcademicYearBasePriceItemComponent = () => {
             errorsCopy.priceYear = '';
         } else {
             errorsCopy.priceYear = 'Year is required';
+            valid = false;
+        }
+
+        if (gradeId) {
+            errorsCopy.gradeId = '';
+        } else {
+            errorsCopy.gradeId = 'Grade name is required';
             valid = false;
         }
 
@@ -142,11 +162,28 @@ const AddAcademicYearBasePriceItemComponent = () => {
                             </div>
 
                             <div className="form-group mb-3">
+                                <label className="form-label font-weight-bold">Select grade name:</label>
+                                <select
+                                    className={`form-control ${errors.gradeId ? 'is-invalid' : ''}`}
+                                    value={gradeId}
+                                    onChange={(e) => setGradeId(e.target.value)}
+                                >
+                                    <option value="">Select grade name</option>
+                                    {
+                                        grades.map((grade) => (
+                                            <option key={grade.id} value={grade.id}>{grade.name}</option>
+                                        ))
+                                    }
+                                </select>
+                                {errors.gradeId && <div className="invalid-feedback">{errors.gradeId}</div>}
+                            </div>
+
+                            <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Select payment item:</label>
                                 <select
                                     className={`form-control ${errors.paymentItemId ? 'is-invalid' : ''}`}
-                                    value={paymentItemId || ""}
-                                    onChange={(e) => setPaymentItemId(e.target.value)}  // Устанавливаем выбранный ID
+                                    value={paymentItemId}
+                                    onChange={(e) => setPaymentItemId(e.target.value)}
                                 >
                                     <option value="">Select payment item</option>
                                     {
@@ -168,7 +205,8 @@ const AddAcademicYearBasePriceItemComponent = () => {
                                     value={paymentItemPrice || ""}
                                     onChange={(e) => setPaymentItemPrice(e.target.value)}
                                 />
-                                {errors.paymentItemPrice && <div className="invalid-feedback">{errors.paymentItemPrice}</div>}
+                                {errors.paymentItemPrice &&
+                                    <div className="invalid-feedback">{errors.paymentItemPrice}</div>}
                             </div>
 
                             <div className="text-center">
@@ -184,4 +222,4 @@ const AddAcademicYearBasePriceItemComponent = () => {
     );
 }
 
-export default AddAcademicYearBasePriceItemComponent;
+export default AddBasePriceItemComponent;

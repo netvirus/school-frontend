@@ -11,8 +11,8 @@ import AddStudentComponent from "./components/add/AddStudentComponent.jsx";
 import ListStudentsComponent from "./components/list/ListStudentsComponent.jsx";
 import ListPaymentItemComponent from "./components/list/ListPaymentItemComponent.jsx";
 import AddPaymentItemComponent from "./components/add/AddPaymentItemComponent.jsx";
-import AddAcademicYearBasePriceItemComponent from "./components/add/AddAcademicYearBasePriceItemComponent.jsx";
-import ListAcademicYearBasePriceItemsComponent from "./components/list/ListAcademicYearBasePriceItemsComponent.jsx";
+import AddBasePriceItemComponent from "./components/add/AddBasePriceItemComponent.jsx";
+import ListBasePriceItemsComponent from "./components/list/ListBasePriceItemsComponent.jsx";
 
 function App() {
     return (
@@ -35,9 +35,9 @@ function App() {
                         <Route path='/payment-items' element={<ListPaymentItemComponent />} />
                         <Route path='/payment-items/add-item' element={<AddPaymentItemComponent />} />
                         <Route path='/payment-items/edit-item/:id' element={<AddPaymentItemComponent />} />
-                        <Route path='/academic-year-base-prices' element={<ListAcademicYearBasePriceItemsComponent />} />
-                        <Route path='/academic-year-base-prices/add-item' element={<AddAcademicYearBasePriceItemComponent />} />
-                        <Route path='/academic-year-base-prices/edit-item/:id' element={<AddAcademicYearBasePriceItemComponent />} />
+                        <Route path='/academic-year-base-prices' element={<ListBasePriceItemsComponent />} />
+                        <Route path='/academic-year-base-prices/add-item' element={<AddBasePriceItemComponent />} />
+                        <Route path='/academic-year-base-prices/edit-item/:id' element={<AddBasePriceItemComponent />} />
                     </Routes>
                 </main>
                 <FooterComponent />
