@@ -25,11 +25,11 @@ const ListBasePriceItemsComponent = () => {
     }, [location.state]);
 
     function addNewBasePriceitem() {
-        navigator('/academic-year-base-prices/add-item');
+        navigator('/base-prices/add-item');
     }
 
     function editBasePriceitem(id) {
-        navigator(`/academic-year-base-prices/edit-item/${id}`);
+        navigator(`/base-prices/edit-item/${id}`);
     }
 
     function deleteBasePriceitem(id) {

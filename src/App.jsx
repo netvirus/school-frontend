@@ -35,9 +35,9 @@ function App() {
                         <Route path='/payment-items' element={<ListPaymentItemComponent />} />
                         <Route path='/payment-items/add-item' element={<AddPaymentItemComponent />} />
                         <Route path='/payment-items/edit-item/:id' element={<AddPaymentItemComponent />} />
-                        <Route path='/academic-year-base-prices' element={<ListBasePriceItemsComponent />} />
-                        <Route path='/academic-year-base-prices/add-item' element={<AddBasePriceItemComponent />} />
-                        <Route path='/academic-year-base-prices/edit-item/:id' element={<AddBasePriceItemComponent />} />
+                        <Route path='/base-prices' element={<ListBasePriceItemsComponent />} />
+                        <Route path='/base-prices/add-item' element={<AddBasePriceItemComponent />} />
+                        <Route path='/base-prices/edit-item/:id' element={<AddBasePriceItemComponent />} />
                     </Routes>
                 </main>
                 <FooterComponent />

@@ -5,7 +5,7 @@ const HomePageComponent = () => {
     const navigator = useNavigate();
 
     function listBasePriceItems() {
-        navigator("/academic-year-base-prices");
+        navigator("/base-prices");
     }
 
     function listPaymentItems() {

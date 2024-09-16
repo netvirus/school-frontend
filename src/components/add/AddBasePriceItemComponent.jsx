@@ -8,7 +8,7 @@ const AddBasePriceItemComponent = () => {
 
     const [priceYear, setPriceYear] = useState(2024);
     const [gradeId, setGradeId] = useState('');
-    const [grades, setGrades] = useState([]);
+    const [gradesArray, setGrades] = useState([]);
     const [paymentItemId, setPaymentItemId] = useState('');
     const [paymentItems, setPaymentItems] = useState([]);
     const [paymentItemPrice, setPaymentItemPrice] = useState('');
@@ -76,7 +76,7 @@ const AddBasePriceItemComponent = () => {
                     console.error(error);
                 });
             }
-            navigator("/academic-year-base-prices", { state: { shouldReload: true } });
+            navigator("/base-prices", { state: { shouldReload: true } });
         }
     }
 
@@ -118,7 +118,7 @@ const AddBasePriceItemComponent = () => {
     }
 
     function backToList() {
-        navigator("/academic-year-base-prices");
+        navigator("/base-prices");
     }
 
     function backToHome() {
@@ -170,7 +170,7 @@ const AddBasePriceItemComponent = () => {
                                 >
                                     <option value="">Select grade name</option>
                                     {
-                                        grades.map((grade) => (
+                                        gradesArray.map((grade) => (
                                             <option key={grade.id} value={grade.id}>{grade.name}</option>
                                         ))
                                     }
