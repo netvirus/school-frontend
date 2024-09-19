@@ -1,23 +1,32 @@
 import { useEffect, useState } from "react";
-import { listStudents } from "../../servicea/StudentService.js";
-import { useNavigate } from "react-router-dom";
-import { deleteStudentService } from "../../servicea/StudentService.js";
+import { listStudents, deleteStudentService } from "../../servicea/StudentService.js";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ListStudentsComponent = () => {
+    const [students, setStudents] = useState([]);
+    const navigator = useNavigate();
+    const location = useLocation();
 
-    const [students, setStudents] = useState([])
+    // Загрузка списка студентов и проверка, если нужно обновить список
+    useEffect(() => {
+        // Если состояние навигации содержит shouldReload, обновляем список
+        if (location.state?.shouldReload) {
+            fetchStudents();
+        }
+    }, [location.state]);
 
     useEffect(() => {
+        fetchStudents();
+    }, []);
+
+    const fetchStudents = () => {
         listStudents().then((response) => {
             const sortedStudents = response.data.sort((a, b) => a.id - b.id);
             setStudents(sortedStudents);
         }).catch(error => {
             console.error(error);
-        })
-
-    }, [])
-
-    const navigator = useNavigate();
+        });
+    };
 
     function addNewStudent() {
         navigator('/students/add-student');
@@ -35,10 +44,10 @@ const ListStudentsComponent = () => {
         if (id) {
             deleteStudentService(id).then((response) => {
                 console.log(response.data);
-                setStudents((prevStudent) => prevStudent.filter(student => student.id !== id));
+                setStudents((prevStudents) => prevStudents.filter(student => student.id !== id));
             }).catch(error => {
                 console.error(error);
-            })
+            });
         }
     }
 
@@ -63,7 +72,6 @@ const ListStudentsComponent = () => {
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Age</th>
@@ -83,7 +91,6 @@ const ListStudentsComponent = () => {
                     {
                         students.map(student =>
                             <tr key={student.id}>
-                                <td>{student.id}</td>
                                 <td>{student.firstName}</td>
                                 <td>{student.lastName}</td>
                                 <td>{student.age}</td>
@@ -97,20 +104,8 @@ const ListStudentsComponent = () => {
                                 <td>{student.motherPhoneNumber}</td>
                                 <td>{student.fatherPhoneNumber}</td>
                                 <td>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-secondary me-2"
-                                        onClick={() => editStudent(student.id)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-danger"
-                                        onClick={() => deleteStudent(student.id)}
-                                    >
-                                        Delete
-                                    </button>
+                                    <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editStudent(student.id)}>Edit</button>
+                                    <button type="button" className="btn btn-outline-danger" onClick={() => deleteStudent(student.id)}>Delete</button>
                                 </td>
                             </tr>)
                     }
@@ -122,7 +117,7 @@ const ListStudentsComponent = () => {
                 <button type="button" className="btn btn-primary" onClick={backToHome}>Back to Home</button>
             </div>
         </div>
-    )
+    );
 }
 
 export default ListStudentsComponent;

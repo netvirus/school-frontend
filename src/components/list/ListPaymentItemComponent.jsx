@@ -39,32 +39,21 @@ const ListPaymentItemComponent = () => {
         }
     }
 
-    function backToHome() {
-        navigator('/');
-    }
-
     return (
         <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
                 List of Payment Items
-                <i
-                    className="bi bi-info-circle custom-tooltip"
-                    style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="This is the list of all available payment items"
-                ></i>
+                <i className="bi bi-info-circle custom-tooltip" style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}} data-bs-toggle="tooltip" data-bs-placement="top" title="This is the list of all available payment items" />
             </h2>
 
             <div className="mb-3">
-                <button type="button" className="btn btn-primary" onClick={addNewPaymentItem}>Add payment item</button>
+                <button type="button" className="btn btn-primary" onClick={ addNewPaymentItem }>Add payment item</button>
             </div>
 
             <div className="table-responsive w-100">
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Name</th>
                         <th>Actions</th>
                     </tr>
@@ -73,23 +62,10 @@ const ListPaymentItemComponent = () => {
                     {
                         paymentItems.map(item =>
                             <tr key={item.id}>
-                                <td>{item.id}</td>
                                 <td>{item.name}</td>
                                 <td>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-secondary me-2"
-                                        onClick={() => editPaymentItem(item.id)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-danger"
-                                        onClick={() => deletePaymentItem(item.id)}
-                                    >
-                                        Delete
-                                    </button>
+                                    <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editPaymentItem(item.id)}>Edit</button>
+                                    <button type="button" className="btn btn-outline-danger" onClick={() => deletePaymentItem(item.id)}>Delete</button>
                                 </td>
                             </tr>
                         )
@@ -99,7 +75,7 @@ const ListPaymentItemComponent = () => {
             </div>
 
             <div className="mt-3">
-                <button type="button" className="btn btn-primary" onClick={backToHome}>Back to Home</button>
+                <button type="button" className="btn btn-primary me-2" onClick={() => navigator('/')}>Back to Home</button>
             </div>
         </div>
     );

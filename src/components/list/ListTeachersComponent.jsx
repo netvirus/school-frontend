@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
-import { listTeachers } from "../../servicea/TeacherService.js";
-import { useNavigate } from "react-router-dom";
-import { deleteTeacherService } from "../../servicea/TeacherService.js";
+import { listTeachers, deleteTeacherService } from "../../servicea/TeacherService.js";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ListTeachersComponent = () => {
 
-    const [teachers, setTeachers] = useState([])
+    const [teachers, setTeachers] = useState([]);
+    const navigator = useNavigate();
+    const location = useLocation();
 
-    useEffect(() => {
+    // Функция для загрузки списка учителей
+    const loadTeachers = () => {
         listTeachers().then((response) => {
             const sortedTeachers = response.data.sort((a, b) => a.id - b.id);
             setTeachers(sortedTeachers);
         }).catch(error => {
             console.error(error);
-        })
+        });
+    };
 
-    }, [])
-
-    const navigator = useNavigate();
+    useEffect(() => {
+        // Загружаем список учителей при первой загрузке компонента или при возвращении с флагом shouldReload
+        if (!location.state || location.state.shouldReload) {
+            loadTeachers();
+        }
+    }, [location]);
 
     function addNewTeacher() {
         navigator('/teachers/add-teacher');
@@ -33,12 +39,11 @@ const ListTeachersComponent = () => {
 
     function deleteTeacher(id) {
         if (id) {
-            deleteTeacherService(id).then((response) => {
-                console.log(response.data);
+            deleteTeacherService(id).then(() => {
                 setTeachers((prevTeacher) => prevTeacher.filter(teacher => teacher.id !== id));
             }).catch(error => {
                 console.error(error);
-            })
+            });
         }
     }
 
@@ -48,7 +53,7 @@ const ListTeachersComponent = () => {
                 List of Teachers
                 <i
                     className="bi bi-info-circle custom-tooltip"
-                    style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
+                    style={{ marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem' }}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="This is the list of all teachers in the school"
@@ -63,7 +68,6 @@ const ListTeachersComponent = () => {
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>
-                        <th>Id</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Age</th>
@@ -78,9 +82,8 @@ const ListTeachersComponent = () => {
                     </thead>
                     <tbody>
                     {
-                        teachers.map(teacher =>
+                        teachers.map(teacher => (
                             <tr key={teacher.id}>
-                                <td>{teacher.id}</td>
                                 <td>{teacher.firstName}</td>
                                 <td>{teacher.lastName}</td>
                                 <td>{teacher.age}</td>
@@ -106,7 +109,8 @@ const ListTeachersComponent = () => {
                                         Delete
                                     </button>
                                 </td>
-                            </tr>)
+                            </tr>
+                        ))
                     }
                     </tbody>
                 </table>
@@ -116,7 +120,7 @@ const ListTeachersComponent = () => {
                 <button type="button" className="btn btn-primary" onClick={backToHome}>Back to Home</button>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ListTeachersComponent;

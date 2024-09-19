@@ -63,46 +63,22 @@ const AddPaymentItemComponent = () => {
         return valid;
     }
 
-    function backToList() {
-        navigator("/payment-items");
-    }
-
-    function backToHome() {
-        navigator("/");
-    }
-
-    function pageTitle() {
-        return id ? <h2 className="text-center mt-3">Update the payment item</h2> : <h2 className="text-center mt-3">Add new payment item</h2>;
-    }
-
-    function saveOrUpdateButton() {
-        return id ? <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdatePaymentItem}>Update</button>
-            : <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdatePaymentItem}>Save</button>;
-    }
-
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="card col-md-8">
-                    {pageTitle()}
+                    <h2 className="text-center mt-3">{id ? 'Update the payment item' : 'Add new payment item'}</h2>
                     <div className="card-body">
-                        <form>
+                        <form onSubmit={ saveOrUpdatePaymentItem }>
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Payment item name:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter payment item name"
-                                    name="paymentItemName"
-                                    value={paymentItemName}
-                                    className={`form-control ${errors.paymentItemName ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setPaymentItemName(e.target.value)}
-                                />
+                                <input type="text" placeholder="Enter payment item name" name="paymentItemName" value={paymentItemName} className={`form-control ${errors.paymentItemName ? 'is-invalid' : ''}`} onChange={(e) => setPaymentItemName(e.target.value)}/>
                                 {errors.paymentItemName && <div className="invalid-feedback">{errors.paymentItemName}</div>}
                             </div>
                             <div className="text-center">
-                                {saveOrUpdateButton()}
-                                <button type="button" className="btn btn-primary me-2" onClick={backToList}>Back</button>
-                                <button type="button" className="btn btn-primary me-2" onClick={backToHome}>Back to Home</button>
+                                <button type="submit" className="btn btn-primary me-2">{id ? 'Update' : 'Save'}</button>
+                                <button type="button" className="btn btn-secondary me-2" onClick={() => navigator('/payment-items')}>Back</button>
+                                <button type="button" className="btn btn-primary me-2" onClick={() => navigator('/')}>Back to Home</button>
                             </div>
                         </form>
                     </div>
