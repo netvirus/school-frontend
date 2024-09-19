@@ -25,8 +25,8 @@ const AddBasePriceItemComponent = () => {
         if (id) {
             getBasePriceByIdService(id).then((response) => {
                 setPriceYear(response.data.priceYear);
-                setGradeId(response.data.gradeId);
-                setPaymentItemId(response.data.paymentItemId);
+                setGradeId(response.data.grade.id);
+                setPaymentItemId(response.data.paymentItem.id);
                 setPaymentItemPrice(response.data.paymentItemPrice);
             }).catch(error => {
                 console.error(error);

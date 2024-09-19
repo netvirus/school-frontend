@@ -24,15 +24,15 @@ const ListBasePriceItemsComponent = () => {
         }
     }, [location.state]);
 
-    function addNewBasePriceitem() {
+    function addNewBasePriceItem() {
         navigate('/base-prices/add-item');
     }
 
-    function editBasePriceitem(id) {
+    function editBasePriceItem(id) {
         navigate(`/base-prices/edit-item/${id}`);
     }
 
-    function deleteBasePriceitem(id) {
+    function deleteBasePriceItem(id) {
         if (id) {
             deleteBasePriceService(id).then((response) => {
                 console.log(response.data);
@@ -46,12 +46,12 @@ const ListBasePriceItemsComponent = () => {
     return (
         <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
-                List of base price items
-                <i className="bi bi-info-circle custom-tooltip" style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}} data-bs-toggle="tooltip" data-bs-placement="top" title="This is the list of all available base price items" />
+                List of Base Price Items
+                <i className="bi bi-info-circle custom-tooltip" style={{ marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem' }} data-bs-toggle="tooltip" data-bs-placement="top" title="This is the list of all available base price items" />
             </h2>
 
             <div className="mb-3">
-                <button type="button" className="btn btn-primary" onClick={addNewBasePriceitem}>Add Item</button>
+                <button type="button" className="btn btn-primary" onClick={addNewBasePriceItem}>Add Item</button>
             </div>
 
             <div className="table-responsive w-100">
@@ -65,19 +65,17 @@ const ListBasePriceItemsComponent = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {
-                        basePrice.map(item =>
-                            <tr key={item.id}>
-                                <td>{item.gradeName}</td>
-                                <td>{item.paymentItemName}</td>
-                                <td>{item.paymentItemPrice}</td>
-                                <td>
-                                    <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editBasePriceitem(item.id)}>Edit</button>
-                                    <button type="button" className="btn btn-outline-danger" onClick={() => deleteBasePriceitem(item.id)}>Delete</button>
-                                </td>
-                            </tr>
-                        )
-                    }
+                    {basePrice.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.grade.name}</td>
+                            <td>{item.paymentItem.name}</td>
+                            <td>{item.paymentItemPrice}</td>
+                            <td>
+                                <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editBasePriceItem(item.id)}>Edit</button>
+                                <button type="button" className="btn btn-outline-danger" onClick={() => deleteBasePriceItem(item.id)}>Delete</button>
+                            </td>
+                        </tr>
+                    ))}
                     </tbody>
                 </table>
             </div>
