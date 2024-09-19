@@ -46,12 +46,14 @@ const AddBasePriceItemComponent = () => {
         });
     }, [id]);
 
-    function saveOrUpdatePersonalPrice(e) {
+    function saveOrUpdateBasePrice(e) {
         e.preventDefault();
+
+        // Формируем объект с вложенными объектами grade и paymentItem
         const _personalPrice = {
             priceYear: priceYear,
-            gradeId: gradeId,  // Убедитесь, что gradeId отправляется
-            paymentItemId: paymentItemId, // Убедитесь, что paymentItemId отправляется
+            grade: { id: gradeId },  // Указываем объект с id
+            paymentItem: { id: paymentItemId },  // Указываем объект с id
             paymentItemPrice: paymentItemPrice
         };
 
@@ -71,6 +73,7 @@ const AddBasePriceItemComponent = () => {
             }
         }
     }
+
 
     function validateForm() {
         let valid = true;
@@ -114,7 +117,7 @@ const AddBasePriceItemComponent = () => {
                 <div className="card col-md-8">
                     <h2 className="text-center mt-3">{id ? 'Update the price item' : 'Add new price item'}</h2>
                     <div className="card-body">
-                        <form onSubmit={saveOrUpdatePersonalPrice}>
+                        <form onSubmit={saveOrUpdateBasePrice}>
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Enter Academic Year:</label>
                                 <input type="text" placeholder="Enter Academic Year" name="priceYear" value={priceYear} className={`form-control ${errors.priceYear ? 'is-invalid' : ''}`} onChange={(e) => setPriceYear(e.target.value)} />
