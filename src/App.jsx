@@ -11,6 +11,8 @@ import AddStudentComponent from "./components/add/AddStudentComponent.jsx";
 import ListStudentsComponent from "./components/list/ListStudentsComponent.jsx";
 import ListPaymentItemComponent from "./components/list/ListPaymentItemComponent.jsx";
 import AddPaymentItemComponent from "./components/add/AddPaymentItemComponent.jsx";
+import AddPriceComponent from "./components/add/AddPriceComponent.jsx";
+import ListPricesComponent from "./components/list/ListPricesComponent.jsx";
 import AddBasePriceItemComponent from "./components/add/AddBasePriceItemComponent.jsx";
 import ListBasePriceItemsComponent from "./components/list/ListBasePriceItemsComponent.jsx";
 
@@ -35,6 +37,9 @@ function App() {
                         <Route path='/payment-items' element={<ListPaymentItemComponent />} />
                         <Route path='/payment-items/add-item' element={<AddPaymentItemComponent />} />
                         <Route path='/payment-items/edit-item/:id' element={<AddPaymentItemComponent />} />
+                        <Route path='/prices' element={<ListPricesComponent />} />
+                        <Route path='/prices/add' element={<AddPriceComponent />} />
+                        <Route path='/prices/edit/:id' element={<AddPriceComponent />} />
                         <Route path='/base-prices' element={<ListBasePriceItemsComponent />} />
                         <Route path='/base-prices/add-item' element={<AddBasePriceItemComponent />} />
                         <Route path='/base-prices/edit-item/:id' element={<AddBasePriceItemComponent />} />
