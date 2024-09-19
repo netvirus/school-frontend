@@ -3,18 +3,20 @@ import { deletePaymentItemService, listPaymentItems } from "../../servicea/Payme
 import { useNavigate } from "react-router-dom";
 
 const ListPaymentItemComponent = () => {
+    const [paymentItems, setPaymentItems] = useState([]);
 
-    const [paymentItems, setPaymentItems] = useState([])
-
-    useEffect(() => {
+    const fetchPaymentItems = () => {
         listPaymentItems().then((response) => {
             const sortedPaymentItems = response.data.sort((a, b) => a.id - b.id);
             setPaymentItems(sortedPaymentItems);
         }).catch(error => {
             console.error(error);
-        })
+        });
+    };
 
-    }, [])
+    useEffect(() => {
+        fetchPaymentItems();
+    }, []);
 
     const navigator = useNavigate();
 
@@ -30,10 +32,10 @@ const ListPaymentItemComponent = () => {
         if (id) {
             deletePaymentItemService(id).then((response) => {
                 console.log(response.data);
-                setPaymentItems((prevItem) => prevItem.filter(item => item.id !== id));
+                setPaymentItems((prevItems) => prevItems.filter(item => item.id !== id));
             }).catch(error => {
                 console.error(error);
-            })
+            });
         }
     }
 
@@ -101,6 +103,6 @@ const ListPaymentItemComponent = () => {
             </div>
         </div>
     );
-}
+};
 
 export default ListPaymentItemComponent;
