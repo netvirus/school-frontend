@@ -60,6 +60,7 @@ const ListPricesComponent = () => {
                     <tr>
                         <th>Year of price</th>
                         <th>Description</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,8 +69,15 @@ const ListPricesComponent = () => {
                             <td>{item.priceYear}</td>
                             <td>{item.priceDescription}</td>
                             <td>
-                                <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editPrice(item.id)}>Edit</button>
-                                <button type="button" className="btn btn-outline-danger" onClick={() => deletePrice(item.id)}>Delete</button>
+                                <button type="button" className="btn btn-primary me-2"
+                                        onClick={() => navigate('/base-prices')}>List of Base price items
+                                </button>
+                                <button type="button" className="btn btn-outline-secondary me-2"
+                                        onClick={() => editPrice(item.id)}>Edit
+                                </button>
+                                <button type="button" className="btn btn-outline-danger"
+                                        onClick={() => deletePrice(item.id)}>Delete
+                                </button>
                             </td>
                         </tr>
                     ))}
