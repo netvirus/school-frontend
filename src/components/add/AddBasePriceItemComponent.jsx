@@ -5,15 +5,14 @@ import { listGrades } from "../../servicea/GradeService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddBasePriceItemComponent = () => {
-
     const [priceYear, setPriceYear] = useState(2024);
     const [gradeId, setGradeId] = useState('');
     const [gradesArray, setGrades] = useState([]);
     const [paymentItemId, setPaymentItemId] = useState('');
     const [paymentItems, setPaymentItems] = useState([]);
     const [paymentItemPrice, setPaymentItemPrice] = useState('');
-
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [errors, setErrors] = useState({
         priceYear: '',
@@ -21,8 +20,6 @@ const AddBasePriceItemComponent = () => {
         paymentItemId: '',
         paymentItemPrice: ''
     });
-
-    const navigator = useNavigate();
 
     useEffect(() => {
         if (id) {
@@ -36,23 +33,20 @@ const AddBasePriceItemComponent = () => {
             });
         }
 
-        // Получаем список имен грейдов
         listGrades().then((response) => {
             setGrades(response.data);
         }).catch(error => {
             console.error(error);
         });
 
-        // Получаем список платёжных элементов
         listPaymentItems().then((response) => {
             setPaymentItems(response.data);
         }).catch(error => {
             console.error(error);
         });
-
     }, [id]);
 
-    function saveOrUpdateAcademicYearPersonalPrice(e) {
+    function saveOrUpdatePersonalPrice(e) {
         e.preventDefault();
         const _personalPrice = {
             priceYear: priceYear,
@@ -60,27 +54,24 @@ const AddBasePriceItemComponent = () => {
             paymentItemId: paymentItemId,
             paymentItemPrice: paymentItemPrice
         };
-        console.log(_personalPrice);
 
         if (validateForm()) {
             if (id) {
-                updateBasePriceService(id, _personalPrice).then((response) => {
-                    console.log(response.data);
+                updateBasePriceService(id, _personalPrice).then(() => {
+                    navigate("/base-prices", { state: { shouldReload: true } });
                 }).catch(error => {
                     console.error(error);
                 });
             } else {
-                addBasePriceService(_personalPrice).then((response) => {
-                    console.log(response.data);
+                addBasePriceService(_personalPrice).then(() => {
+                    navigate("/base-prices", { state: { shouldReload: true } });
                 }).catch(error => {
                     console.error(error);
                 });
             }
-            navigator("/base-prices", { state: { shouldReload: true } });
         }
     }
 
-    // Валидация полей
     function validateForm() {
         let valid = true;
         const errorsCopy = { ...errors };
@@ -117,57 +108,22 @@ const AddBasePriceItemComponent = () => {
         return valid;
     }
 
-    function backToList() {
-        navigator("/base-prices");
-    }
-
-    function backToHome() {
-        navigator("/");
-    }
-
-    function pageTitle() {
-        if (id) {
-            return <h2 className="text-center mt-3">Update the price item</h2>;
-        } else {
-            return <h2 className="text-center mt-3">Add new price item</h2>;
-        }
-    }
-
-    function saveOrUpdateButton() {
-        if (id) {
-            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateAcademicYearPersonalPrice}>Update</button>;
-        } else {
-            return <button type="button" className="btn btn-primary me-2" onClick={saveOrUpdateAcademicYearPersonalPrice}>Save</button>;
-        }
-    }
-
     return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="card col-md-8">
-                    {pageTitle()}
+                    <h2 className="text-center mt-3">{id ? 'Update the price item' : 'Add new price item'}</h2>
                     <div className="card-body">
-                        <form>
+                        <form onSubmit={saveOrUpdatePersonalPrice}>
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Enter Academic Year:</label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter Academic Year"
-                                    name="priceYear"
-                                    value={priceYear}
-                                    className={`form-control ${errors.priceYear ? 'is-invalid' : ''}`}
-                                    onChange={(e) => setPriceYear(e.target.value)}
-                                />
+                                <input type="text" placeholder="Enter Academic Year" name="priceYear" value={priceYear} className={`form-control ${errors.priceYear ? 'is-invalid' : ''}`} onChange={(e) => setPriceYear(e.target.value)} />
                                 {errors.priceYear && <div className="invalid-feedback">{errors.priceYear}</div>}
                             </div>
 
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Select grade name:</label>
-                                <select
-                                    className={`form-control ${errors.gradeId ? 'is-invalid' : ''}`}
-                                    value={gradeId}
-                                    onChange={(e) => setGradeId(e.target.value)}
-                                >
+                                <select className={`form-control ${errors.gradeId ? 'is-invalid' : ''}`} value={gradeId} onChange={(e) => setGradeId(e.target.value)}>
                                     <option value="">Select grade name</option>
                                     {
                                         gradesArray.map((grade) => (
@@ -180,11 +136,7 @@ const AddBasePriceItemComponent = () => {
 
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Select payment item:</label>
-                                <select
-                                    className={`form-control ${errors.paymentItemId ? 'is-invalid' : ''}`}
-                                    value={paymentItemId}
-                                    onChange={(e) => setPaymentItemId(e.target.value)}
-                                >
+                                <select className={`form-control ${errors.paymentItemId ? 'is-invalid' : ''}`} value={paymentItemId} onChange={(e) => setPaymentItemId(e.target.value)}>
                                     <option value="">Select payment item</option>
                                     {
                                         paymentItems.map((item) => (
@@ -197,22 +149,14 @@ const AddBasePriceItemComponent = () => {
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Item price:</label>
-                                <input
-                                    type="number"
-                                    placeholder="Enter item price"
-                                    name="paymentItemPrice"
-                                    className={`form-control ${errors.paymentItemPrice ? 'is-invalid' : ''}`}
-                                    value={paymentItemPrice || ""}
-                                    onChange={(e) => setPaymentItemPrice(e.target.value)}
-                                />
-                                {errors.paymentItemPrice &&
-                                    <div className="invalid-feedback">{errors.paymentItemPrice}</div>}
+                                <input type="number" placeholder="Enter item price" name="paymentItemPrice" className={`form-control ${errors.paymentItemPrice ? 'is-invalid' : ''}`} value={paymentItemPrice || ""} onChange={(e) => setPaymentItemPrice(e.target.value)} />
+                                {errors.paymentItemPrice && <div className="invalid-feedback">{errors.paymentItemPrice}</div>}
                             </div>
 
                             <div className="text-center">
-                                {saveOrUpdateButton()}
-                                <button type="button" className="btn btn-primary me-2" onClick={backToList}>Back</button>
-                                <button type="button" className="btn btn-primary me-2" onClick={backToHome}>Back to Home</button>
+                                <button type="submit" className="btn btn-primary me-2">{id ? 'Update' : 'Save'}</button>
+                                <button type="button" className="btn btn-secondary me-2" onClick={() => navigate('/base-prices')}>Back</button>
+                                <button type="button" className="btn btn-primary me-2" onClick={() => navigate('/')}>Back to Home</button>
                             </div>
                         </form>
                     </div>

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { deleteBasePriceService, listBasePrices } from "../../servicea/BasePriceItemService.js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ListBasePriceItemsComponent = () => {
-
     const [basePrice, setBasePrice] = useState([]);
-    const navigator = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const loadData = () => {
         listBasePrices().then((response) => {
@@ -25,11 +25,11 @@ const ListBasePriceItemsComponent = () => {
     }, [location.state]);
 
     function addNewBasePriceitem() {
-        navigator('/base-prices/add-item');
+        navigate('/base-prices/add-item');
     }
 
     function editBasePriceitem(id) {
-        navigator(`/base-prices/edit-item/${id}`);
+        navigate(`/base-prices/edit-item/${id}`);
     }
 
     function deleteBasePriceitem(id) {
@@ -39,25 +39,15 @@ const ListBasePriceItemsComponent = () => {
                 setBasePrice((prevPrice) => prevPrice.filter(item => item.id !== id));
             }).catch(error => {
                 console.error(error);
-            })
+            });
         }
-    }
-
-    function backToHome() {
-        navigator('/');
     }
 
     return (
         <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
                 List of base price items
-                <i
-                    className="bi bi-info-circle custom-tooltip"
-                    style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="This is the list of all available base price items"
-                ></i>
+                <i className="bi bi-info-circle custom-tooltip" style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}} data-bs-toggle="tooltip" data-bs-placement="top" title="This is the list of all available base price items" />
             </h2>
 
             <div className="mb-3">
@@ -82,20 +72,8 @@ const ListBasePriceItemsComponent = () => {
                                 <td>{item.paymentItemName}</td>
                                 <td>{item.paymentItemPrice}</td>
                                 <td>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-secondary me-2"
-                                        onClick={() => editBasePriceitem(item.id)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-danger"
-                                        onClick={() => deleteBasePriceitem(item.id)}
-                                    >
-                                        Delete
-                                    </button>
+                                    <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editBasePriceitem(item.id)}>Edit</button>
+                                    <button type="button" className="btn btn-outline-danger" onClick={() => deleteBasePriceitem(item.id)}>Delete</button>
                                 </td>
                             </tr>
                         )
@@ -105,7 +83,7 @@ const ListBasePriceItemsComponent = () => {
             </div>
 
             <div className="mt-3">
-                <button type="button" className="btn btn-primary" onClick={backToHome}>Back to Home</button>
+                <button type="button" className="btn btn-primary me-2" onClick={() => navigate('/')}>Back to Home</button>
             </div>
         </div>
     );
