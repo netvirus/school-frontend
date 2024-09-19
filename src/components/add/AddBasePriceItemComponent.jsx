@@ -25,8 +25,8 @@ const AddBasePriceItemComponent = () => {
         if (id) {
             getBasePriceByIdService(id).then((response) => {
                 setPriceYear(response.data.priceYear);
-                setGradeId(response.data.grade.id);
-                setPaymentItemId(response.data.paymentItem.id);
+                setGradeId(response.data.grade.id); // Убедитесь, что gradeId правильно заполняется
+                setPaymentItemId(response.data.paymentItem.id); // Убедитесь, что paymentItemId правильно заполняется
                 setPaymentItemPrice(response.data.paymentItemPrice);
             }).catch(error => {
                 console.error(error);
@@ -50,8 +50,8 @@ const AddBasePriceItemComponent = () => {
         e.preventDefault();
         const _personalPrice = {
             priceYear: priceYear,
-            gradeId: gradeId,
-            paymentItemId: paymentItemId,
+            gradeId: gradeId,  // Убедитесь, что gradeId отправляется
+            paymentItemId: paymentItemId, // Убедитесь, что paymentItemId отправляется
             paymentItemPrice: paymentItemPrice
         };
 
