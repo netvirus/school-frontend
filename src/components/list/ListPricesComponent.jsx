@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deletePriceService, listPrices } from "../../servicea/PricesService.js";
+import { deletePriceService, listPrices } from "../../services/PricesService.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ListPricesComponent = () => {

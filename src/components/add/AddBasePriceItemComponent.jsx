@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { addBasePriceService, getBasePriceByIdService, updateBasePriceService } from "../../servicea/BasePriceItemService.js";
-import { listPaymentItems } from "../../servicea/PaymentItemService.js";
-import { listGrades } from "../../servicea/GradeService.js";
+import { addBasePriceService, getBasePriceByIdService, updateBasePriceService } from "../../services/BasePriceItemService.js";
+import { listPaymentItems } from "../../services/ServicesItemListService.js";
+import { listGrades } from "../../services/GradeService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddBasePriceItemComponent = () => {

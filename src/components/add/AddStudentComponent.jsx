@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addStudentService, getStudentByIdService, updateStudentService } from "../../servicea/StudentService.js";
+import { addStudentService, getStudentByIdService, updateStudentService } from "../../services/StudentService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddStudentComponent = () => {

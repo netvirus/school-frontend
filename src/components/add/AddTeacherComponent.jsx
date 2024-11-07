@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { addTeacherService, getTeacherByIdService, updateTeacherService } from "../../servicea/TeacherService.js";
+import { addTeacherService, getTeacherByIdService, updateTeacherService } from "../../services/TeacherService.js";
 
 const AddTeacherComponent = () => {
 

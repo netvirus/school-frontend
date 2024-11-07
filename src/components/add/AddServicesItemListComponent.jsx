@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { addPaymentItemService, getPaymentItemByIdService, updatePaymentItemService } from "../../servicea/PaymentItemService.js";
+import { addPaymentItemService, getPaymentItemByIdService, updatePaymentItemService } from "../../services/ServicesItemListService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
-const AddPaymentItemComponent = () => {
+const AddServicesItemListComponent = () => {
 
     const [paymentItemName, setPaymentItemName] = useState('');
 
@@ -33,14 +33,14 @@ const AddPaymentItemComponent = () => {
             if (id) {
                 updatePaymentItemService(id, _paymentItemName).then((response) => {
                     console.log(response.data);
-                    navigator("/payment-items", { state: { shouldReload: true } });
+                    navigator("/services-list", { state: { shouldReload: true } });
                 }).catch(error => {
                     console.error(error);
                 });
             } else {
                 addPaymentItemService(_paymentItemName).then((response) => {
                     console.log(response.data);
-                    navigator("/payment-items", { state: { shouldReload: true } });
+                    navigator("/services-list", { state: { shouldReload: true } });
                 }).catch(error => {
                     console.error(error);
                 });
@@ -88,4 +88,4 @@ const AddPaymentItemComponent = () => {
     );
 }
 
-export default AddPaymentItemComponent;
+export default AddServicesItemListComponent;

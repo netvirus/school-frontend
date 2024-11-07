@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteBookService, listBooks } from "../../servicea/BookService.js";
+import { deleteBookService, listBooks } from "../../services/BookService.js";
 import { useNavigate } from "react-router-dom";
 
 const ListBooksComponent = () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addBookService, getBookByIdService, updateBookService } from "../../servicea/BookService.js";
+import { addBookService, getBookByIdService, updateBookService } from "../../services/BookService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddBookComponent = () => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listTeachers, deleteTeacherService } from "../../servicea/TeacherService.js";
+import { listTeachers, deleteTeacherService } from "../../services/TeacherService.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ListTeachersComponent = () => {

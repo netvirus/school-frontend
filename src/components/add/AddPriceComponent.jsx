@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addPriceService, getPriceByIdService, updatePriceService } from "../../servicea/PricesService.js";
+import { addPriceService, getPriceByIdService, updatePriceService } from "../../services/PricesService.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddPriceComponent = () => {

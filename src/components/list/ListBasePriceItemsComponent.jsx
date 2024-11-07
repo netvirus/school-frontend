@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteBasePriceService, listBasePrices } from "../../servicea/BasePriceItemService.js";
+import { deleteBasePriceService, listBasePrices } from "../../services/BasePriceItemService.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ListBasePriceItemsComponent = () => {

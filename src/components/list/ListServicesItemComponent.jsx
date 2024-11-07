@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { deletePaymentItemService, listPaymentItems } from "../../servicea/PaymentItemService.js";
+import { deletePaymentItemService, listPaymentItems } from "../../services/ServicesItemListService.js";
 import { useNavigate } from "react-router-dom";
 
-const ListPaymentItemComponent = () => {
+const ListServicesItemComponent = () => {
     const [paymentItems, setPaymentItems] = useState([]);
 
     const fetchPaymentItems = () => {
@@ -21,11 +21,11 @@ const ListPaymentItemComponent = () => {
     const navigator = useNavigate();
 
     function addNewPaymentItem() {
-        navigator('/payment-items/add-item');
+        navigator('/services-list/add-item');
     }
 
     function editPaymentItem(id) {
-        navigator(`/payment-items/edit-item/${id}`);
+        navigator(`/services-list/edit-item/${id}`);
     }
 
     function deletePaymentItem(id) {
@@ -42,12 +42,12 @@ const ListPaymentItemComponent = () => {
     return (
         <div className="container d-flex flex-column align-items-center">
             <h2 className="text-center mb-4">
-                List of Payment Items
+                List Services Items
                 <i className="bi bi-info-circle custom-tooltip" style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}} data-bs-toggle="tooltip" data-bs-placement="top" title="This is the list of all available payment items" />
             </h2>
 
             <div className="mb-3">
-                <button type="button" className="btn btn-primary" onClick={ addNewPaymentItem }>Add payment item</button>
+                <button type="button" className="btn btn-primary" onClick={ addNewPaymentItem }>Add Service Item</button>
             </div>
 
             <div className="table-responsive w-100">
@@ -81,4 +81,4 @@ const ListPaymentItemComponent = () => {
     );
 };
 
-export default ListPaymentItemComponent;
+export default ListServicesItemComponent;
