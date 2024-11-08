@@ -25,11 +25,11 @@ const ListPricesComponent = () => {
     }, [location.state]);
 
     function addNewPrice() {
-        navigate('/prices/add');
+        navigate('/personal-prices/add');
     }
 
     function editPrice(id) {
-        navigate(`/prices/edit/${id}`);
+        navigate(`/personal-prices/edit/${id}`);
     }
 
     function deletePrice(id) {
@@ -51,23 +51,25 @@ const ListPricesComponent = () => {
             </h2>
 
             <div className="mb-3">
-                <button type="button" className="btn btn-primary" onClick={addNewPrice}>Add Item</button>
+                <button type="button" className="btn btn-primary" onClick={addNewPrice}>Add New Price</button>
             </div>
 
             <div className="table-responsive w-100">
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>
-                        <th>Year of price</th>
-                        <th>Description</th>
+                        <th>Owner of price</th>
+                        <th>Name</th>
+                        <th>Active</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {price.map(item => (
                         <tr key={item.id}>
-                            <td>{item.priceYear}</td>
-                            <td>{item.priceDescription}</td>
+                            <td>{item.ownerId}</td>
+                            <td>{item.priceName}</td>
+                            <td>{item.active ? 'active' : 'not active'}</td>
                             <td>
                                 <button type="button" className="btn btn-primary me-2"
                                         onClick={() => navigate('/base-prices')}>List of Base price items

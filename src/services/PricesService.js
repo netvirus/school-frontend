@@ -1,6 +1,6 @@
 import api from './axiosConfig.js';
 
-const REST_API_BASE_URL = "/prices";
+const REST_API_BASE_URL = "/personal-prices";
 
 export const listPrices = () => api.get(REST_API_BASE_URL);
 export const addPriceService = (price) => api.post(REST_API_BASE_URL, price);

@@ -11,10 +11,11 @@ import AddStudentComponent from "./components/add/AddStudentComponent.jsx";
 import ListStudentsComponent from "./components/list/ListStudentsComponent.jsx";
 import ListServicesItemComponent from "./components/list/ListServicesItemComponent.jsx";
 import AddServicesItemListComponent from "./components/add/AddServicesItemListComponent.jsx";
-import AddPriceComponent from "./components/add/AddPriceComponent.jsx";
+import AddStudentPersonalPriceComponent from "./components/add/AddStudentPersonalPriceComponent.jsx";
 import ListPricesComponent from "./components/list/ListPricesComponent.jsx";
 import AddBasePriceItemComponent from "./components/add/AddBasePriceItemComponent.jsx";
 import ListBasePriceItemsComponent from "./components/list/ListBasePriceItemsComponent.jsx";
+import StudentComponent from "./components/entity/StudentComponent.jsx";
 
 function App() {
     return (
@@ -33,13 +34,15 @@ function App() {
                         <Route path='/teachers/edit-teacher/:id' element={<AddTeacherComponent />} />
                         <Route path='/students' element={<ListStudentsComponent />} />
                         <Route path='/students/add-student' element={<AddStudentComponent />} />
+                        <Route path='/students/show-student/:id' element={<StudentComponent />} />
                         <Route path='/students/edit-student/:id' element={<AddStudentComponent />} />
                         <Route path='/services-list' element={<ListServicesItemComponent />} />
                         <Route path='/services-list/add-item' element={<AddServicesItemListComponent />} />
                         <Route path='/services-list/edit-item/:id' element={<AddServicesItemListComponent />} />
-                        <Route path='/prices' element={<ListPricesComponent />} />
-                        <Route path='/prices/add' element={<AddPriceComponent />} />
-                        <Route path='/prices/edit/:id' element={<AddPriceComponent />} />
+                        <Route path='/personal-prices' element={<ListPricesComponent />} />
+                        <Route path='/personal-prices/add' element={<AddStudentPersonalPriceComponent />} />
+                        <Route path='/personal-prices/edit/:id' element={<AddStudentPersonalPriceComponent />} />
+                        <Route path='/personal-prices/delete-price/:id' element={<AddStudentPersonalPriceComponent />} />
                         <Route path='/base-prices' element={<ListBasePriceItemsComponent />} />
                         <Route path='/base-prices/add-item' element={<AddBasePriceItemComponent />} />
                         <Route path='/base-prices/edit-item/:id' element={<AddBasePriceItemComponent />} />

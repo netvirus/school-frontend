@@ -173,19 +173,19 @@ const AddStudentComponent = () => {
                             {/* Поля для студента */}
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">First name:</label>
-                                <input type="text" placeholder="First name" className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                                <input type="text" placeholder="First name" className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} value={firstName || ""} onChange={(e) => setFirstName(e.target.value)} />
                                 {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
                             </div>
 
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Last name:</label>
-                                <input type="text" placeholder="Last name" name="lastName" className={`form-control ${errors.lastName ? 'is-invalid' : ''} `} value={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                                <input type="text" placeholder="Last name" name="lastName" className={`form-control ${errors.lastName ? 'is-invalid' : ''} `} value={lastName || ""} onChange={(e) => setLastName(e.target.value)}/>
                                 {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
                             </div>
 
                             <div className="form-group mb-3">
                                 <label className="form-label font-weight-bold">Age:</label>
-                                <input type="number" placeholder="age" name="age" className={`form-control ${errors.age ? 'is-invalid' : ''} `} value={age} onChange={(e) => setAge(Number(e.target.value))}/>
+                                <input type="number" placeholder="age" name="age" className={`form-control ${errors.age ? 'is-invalid' : ''} `} value={age || ""} onChange={(e) => setAge(Number(e.target.value))}/>
                                 {errors.age && <div className="invalid-feedback">{errors.age}</div>}
                             </div>
 
@@ -201,49 +201,49 @@ const AddStudentComponent = () => {
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Nationality:</label>
-                                <input type="text" placeholder="Enter nationality" name="nationality" className={`form-control ${errors.nationality ? 'is-invalid' : ''} `} value={nationality} onChange={(e) => setNationality(e.target.value)}/>
+                                <input type="text" placeholder="Enter nationality" name="nationality" className={`form-control ${errors.nationality ? 'is-invalid' : ''} `} value={nationality || ""} onChange={(e) => setNationality(e.target.value)}/>
                                 {errors.nationality && <div className="invalid-feedback">{errors.nationality}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Phone number:</label>
-                                <input type="text" placeholder="Enter phone number" name="phoneNumber" className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''} `} value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+                                <input type="text" placeholder="Enter phone number" name="phoneNumber" className={`form-control ${errors.phoneNumber ? 'is-invalid' : ''} `} value={phoneNumber || ""} onChange={(e) => setPhoneNumber(e.target.value)}/>
                                 {errors.phoneNumber && <div className="invalid-feedback">{errors.phoneNumber}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Address:</label>
-                                <input type="text" placeholder="Enter an address" name="address" className={`form-control ${errors.address ? 'is-invalid' : ''} `} value={address} onChange={(e) => setAddress(e.target.value)}/>
+                                <input type="text" placeholder="Enter an address" name="address" className={`form-control ${errors.address ? 'is-invalid' : ''} `} value={address || ""} onChange={(e) => setAddress(e.target.value)}/>
                                 {errors.address && <div className="invalid-feedback">{errors.address}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Grade:</label>
-                                <input type="text" placeholder="Enter grade" name="grade" className={`form-control ${errors.grade ? 'is-invalid' : ''} `} value={grade} onChange={(e) => setGrade(e.target.value)}/>
+                                <input type="text" placeholder="Enter grade" name="grade" className={`form-control ${errors.grade ? 'is-invalid' : ''} `} value={grade || ""} onChange={(e) => setGrade(e.target.value)}/>
                                 {errors.grade && <div className="invalid-feedback">{errors.grade}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Mother name:</label>
-                                <input type="text" placeholder="Enter mother name" name="motherName" className={`form-control ${errors.motherName ? 'is-invalid' : ''} `} value={motherName} onChange={(e) => setMotherName(e.target.value)}/>
+                                <input type="text" placeholder="Enter mother name" name="motherName" className={`form-control ${errors.motherName ? 'is-invalid' : ''} `} value={motherName || ""} onChange={(e) => setMotherName(e.target.value)}/>
                                 {errors.motherName && <div className="invalid-feedback">{errors.motherName}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Father name:</label>
-                                <input type="text" placeholder="Enter father name" name="fatherName" className={`form-control ${errors.fatherName ? 'is-invalid' : ''} `} value={fatherName} onChange={(e) => setFatherName(e.target.value)}/>
+                                <input type="text" placeholder="Enter father name" name="fatherName" className={`form-control ${errors.fatherName ? 'is-invalid' : ''} `} value={fatherName || ""} onChange={(e) => setFatherName(e.target.value)}/>
                                 {errors.fatherName && <div className="invalid-feedback">{errors.fatherName}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Mother's phone number:</label>
-                                <input type="text" placeholder="Enter mother's phone number" name="motherPhoneNumber" className={`form-control ${errors.motherPhoneNumber ? 'is-invalid' : ''} `} value={motherPhoneNumber} onChange={(e) => setMotherPhoneNumber(e.target.value)}/>
+                                <input type="text" placeholder="Enter mother's phone number" name="motherPhoneNumber" className={`form-control ${errors.motherPhoneNumber ? 'is-invalid' : ''} `} value={motherPhoneNumber || ""} onChange={(e) => setMotherPhoneNumber(e.target.value)}/>
                                 {errors.motherPhoneNumber && <div className="invalid-feedback">{errors.motherPhoneNumber}</div>}
                             </div>
 
                             <div className="form-group mb-4">
                                 <label className="form-label font-weight-bold">Father's phone number:</label>
-                                <input type="text" placeholder="Enter father's phone number" name="fatherPhoneNumber" className={`form-control ${errors.fatherPhoneNumber ? 'is-invalid' : ''} `} value={fatherPhoneNumber} onChange={(e) => setFatherPhoneNumber(e.target.value)}/>
+                                <input type="text" placeholder="Enter father's phone number" name="fatherPhoneNumber" className={`form-control ${errors.fatherPhoneNumber ? 'is-invalid' : ''} `} value={fatherPhoneNumber || ""} onChange={(e) => setFatherPhoneNumber(e.target.value)}/>
                                 {errors.fatherPhoneNumber && <div className="invalid-feedback">{errors.fatherPhoneNumber}</div>}
                             </div>
 

@@ -7,9 +7,7 @@ const ListStudentsComponent = () => {
     const navigator = useNavigate();
     const location = useLocation();
 
-    // Загрузка списка студентов и проверка, если нужно обновить список
     useEffect(() => {
-        // Если состояние навигации содержит shouldReload, обновляем список
         if (location.state?.shouldReload) {
             fetchStudents();
         }
@@ -34,6 +32,10 @@ const ListStudentsComponent = () => {
 
     function backToHome() {
         navigator('/');
+    }
+
+    function aboutStudent(id) {
+        navigator(`/students/show-student/${id}`);
     }
 
     function editStudent(id) {
@@ -76,14 +78,7 @@ const ListStudentsComponent = () => {
                         <th>Last Name</th>
                         <th>Age</th>
                         <th>Gender</th>
-                        <th>Nationality</th>
-                        <th>Phone Number</th>
-                        <th>Address</th>
                         <th>Grade</th>
-                        <th>Mother name</th>
-                        <th>Father name</th>
-                        <th>Mother's phone</th>
-                        <th>Father's number</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -95,17 +90,17 @@ const ListStudentsComponent = () => {
                                 <td>{student.lastName}</td>
                                 <td>{student.age}</td>
                                 <td>{student.gender}</td>
-                                <td>{student.nationality}</td>
-                                <td>{student.phoneNumber}</td>
-                                <td>{student.address}</td>
                                 <td>{student.grade}</td>
-                                <td>{student.motherName}</td>
-                                <td>{student.fatherName}</td>
-                                <td>{student.motherPhoneNumber}</td>
-                                <td>{student.fatherPhoneNumber}</td>
                                 <td>
-                                    <button type="button" className="btn btn-outline-secondary me-2" onClick={() => editStudent(student.id)}>Edit</button>
-                                    <button type="button" className="btn btn-outline-danger" onClick={() => deleteStudent(student.id)}>Delete</button>
+                                    <button type="button" className="btn btn-outline-secondary me-2"
+                                            onClick={() => aboutStudent(student.id)}>About
+                                    </button>
+                                    <button type="button" className="btn btn-outline-secondary me-2"
+                                            onClick={() => editStudent(student.id)}>Edit
+                                    </button>
+                                    <button type="button" className="btn btn-outline-danger"
+                                            onClick={() => deleteStudent(student.id)}>Delete
+                                    </button>
                                 </td>
                             </tr>)
                     }
