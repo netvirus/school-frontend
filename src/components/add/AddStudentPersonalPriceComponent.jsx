@@ -3,6 +3,7 @@ import { addPriceService, getPriceByIdService, updatePriceService } from "../../
 import { useNavigate, useParams } from "react-router-dom";
 
 const AddStudentPersonalPriceComponent = () => {
+    const [priceOwner, setPriceOwner] = useState();
     const [priceName, setPriceName] = useState();
     const [priceStatus, setPriceStatus] = useState(false);
     const { id } = useParams();
@@ -11,8 +12,8 @@ const AddStudentPersonalPriceComponent = () => {
     useEffect(() => {
         if (id) {
             getPriceByIdService(id).then((response) => {
+                setPriceOwner(response.data.ownerId);
                 setPriceName(response.data.priceName);
-
                 setPriceStatus(!!response.data.active);
             }).catch(error => {
                 console.error(error);
@@ -26,7 +27,7 @@ const AddStudentPersonalPriceComponent = () => {
 
     function saveOrUpdatePrice(e) {
         e.preventDefault();
-        const _price = {priceName: priceName, priceStatus: priceStatus};
+        const _price = {PriceOwner: priceOwner, priceName: priceName, priceStatus: priceStatus};
         console.log(_price);
 
         if (validateForm()) {
