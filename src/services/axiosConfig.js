@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://bot.swingerhub.net/api',
+    baseURL: 'https://api.l2club.org/api',
 });
 export default api;
