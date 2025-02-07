@@ -32,7 +32,8 @@ const AddStudentPersonalPriceComponent = () => {
 
         if (validateForm()) {
             if (id) {
-                updatePriceService(id, _price).then(() => {
+                updatePriceService(id, _price).then((response) => {
+                    console.log(response.data);
                     navigate("/personal-prices", { state: { shouldReload: true } });
                 }).catch(error => {
                     console.error(error);

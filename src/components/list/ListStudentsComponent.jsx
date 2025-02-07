@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listStudents, deleteStudentService } from "../../services/StudentService.js";
+import { getStudentList, deleteStudentService } from "../../services/StudentService.js";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const ListStudentsComponent = () => {
@@ -18,7 +18,7 @@ const ListStudentsComponent = () => {
     }, []);
 
     const fetchStudents = () => {
-        listStudents().then((response) => {
+        getStudentList().then((response) => {
             const sortedStudents = response.data.sort((a, b) => a.id - b.id);
             setStudents(sortedStudents);
         }).catch(error => {
@@ -74,34 +74,41 @@ const ListStudentsComponent = () => {
                 <table className="table table-striped table-bordered text-center">
                     <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Age</th>
+                        <th>Full Name</th>
                         <th>Gender</th>
-                        <th>Grade</th>
-                        <th>Actions</th>
+                        <th>Nationality</th>
+                        <th>Contacts</th>
+                        <th>Parents Contacts</th>
+                        <th>grade</th>
+                        <th>hasStudentPrice</th>
+                        <th>hasDiscount</th>
+                        <th>paymentState</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
                         students.map(student =>
                             <tr key={student.id}>
-                                <td>{student.firstName}</td>
-                                <td>{student.lastName}</td>
-                                <td>{student.age}</td>
+                                <td>{student.fullName}</td>
                                 <td>{student.gender}</td>
+                                <td>{student.nationality}</td>
+                                <td>{student.hasContact ? 'True' : 'False'}</td>
+                                <td>{student.hasParentsContacts ? 'True' : 'False'}</td>
                                 <td>{student.grade}</td>
-                                <td>
-                                    <button type="button" className="btn btn-outline-secondary me-2"
-                                            onClick={() => aboutStudent(student.id)}>About
-                                    </button>
-                                    <button type="button" className="btn btn-outline-secondary me-2"
-                                            onClick={() => editStudent(student.id)}>Edit
-                                    </button>
-                                    <button type="button" className="btn btn-outline-danger"
-                                            onClick={() => deleteStudent(student.id)}>Delete
-                                    </button>
-                                </td>
+                                <td>{student.hasStudentPrice ? 'True' : 'False'}</td>
+                                <td>{student.hasDiscount ? 'True' : 'False'}</td>
+                                <td>{student.paymentState ? 'True' : 'False'}</td>
+                                {/*<td>*/}
+                                {/*    <button type="button" className="btn btn-outline-secondary me-2"*/}
+                                {/*            onClick={() => aboutStudent(student.id)}>About*/}
+                                {/*    </button>*/}
+                                {/*    <button type="button" className="btn btn-outline-secondary me-2"*/}
+                                {/*            onClick={() => editStudent(student.id)}>Edit*/}
+                                {/*    </button>*/}
+                                {/*    <button type="button" className="btn btn-outline-danger"*/}
+                                {/*            onClick={() => deleteStudent(student.id)}>Delete*/}
+                                {/*    </button>*/}
+                                {/*</td>*/}
                             </tr>)
                     }
                     </tbody>
