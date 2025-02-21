@@ -39,19 +39,25 @@ const ListStudentsComponent = () => {
     }
 
     function editStudent(id) {
-        navigator(`/students/edit-student/${id}`);
+        // navigator(`/students/edit-student/${id}`);
     }
 
     function deleteStudent(id) {
-        if (id) {
-            deleteStudentService(id).then((response) => {
-                console.log(response.data);
-                setStudents((prevStudents) => prevStudents.filter(student => student.id !== id));
-            }).catch(error => {
-                console.error(error);
-            });
-        }
+        // if (id) {
+        //     deleteStudentService(id).then((response) => {
+        //         console.log(response.data);
+        //         setStudents((prevStudents) => prevStudents.filter(student => student.id !== id));
+        //     }).catch(error => {
+        //         console.error(error);
+        //     });
+        // }
     }
+
+    // Функция для рендеринга иконок вместо True/False
+    const renderBooleanIcon = (value) => (
+        <i className={`bi ${value ? "bi-check-circle-fill text-success" : "bi-x-circle-fill text-danger"}`}
+           title={value ? "Yes" : "No"}></i>
+    );
 
     return (
         <div className="container mt-1 d-flex flex-column align-items-center">
@@ -59,7 +65,7 @@ const ListStudentsComponent = () => {
                 List of Students
                 <i
                     className="bi bi-info-circle custom-tooltip"
-                    style={{marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem'}}
+                    style={{ marginLeft: '10px', cursor: 'pointer', fontSize: '1.10rem' }}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="This is the list of all students in the school"
@@ -79,36 +85,45 @@ const ListStudentsComponent = () => {
                         <th>Nationality</th>
                         <th>Contacts</th>
                         <th>Parents Contacts</th>
-                        <th>grade</th>
-                        <th>hasStudentPrice</th>
-                        <th>hasDiscount</th>
-                        <th>paymentState</th>
+                        <th>Grade</th>
+                        <th>Has Student Price</th>
+                        <th>Has Discount</th>
+                        <th>Payment State</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
                         students.map(student =>
                             <tr key={student.id}>
-                                <td>{student.fullName}</td>
+                                <td>
+                                    {student.fullName}
+                                </td>
                                 <td>{student.gender}</td>
                                 <td>{student.nationality}</td>
-                                <td>{student.hasContact ? 'True' : 'False'}</td>
-                                <td>{student.hasParentsContacts ? 'True' : 'False'}</td>
+                                <td>{renderBooleanIcon(student.hasContact)}</td>
+                                <td>{renderBooleanIcon(student.hasParentsContacts)}</td>
                                 <td>{student.grade}</td>
-                                <td>{student.hasStudentPrice ? 'True' : 'False'}</td>
-                                <td>{student.hasDiscount ? 'True' : 'False'}</td>
-                                <td>{student.paymentState ? 'True' : 'False'}</td>
-                                {/*<td>*/}
-                                {/*    <button type="button" className="btn btn-outline-secondary me-2"*/}
-                                {/*            onClick={() => aboutStudent(student.id)}>About*/}
-                                {/*    </button>*/}
-                                {/*    <button type="button" className="btn btn-outline-secondary me-2"*/}
-                                {/*            onClick={() => editStudent(student.id)}>Edit*/}
-                                {/*    </button>*/}
-                                {/*    <button type="button" className="btn btn-outline-danger"*/}
-                                {/*            onClick={() => deleteStudent(student.id)}>Delete*/}
-                                {/*    </button>*/}
-                                {/*</td>*/}
+                                <td>{renderBooleanIcon(student.hasStudentPrice)}</td>
+                                <td>{renderBooleanIcon(student.hasDiscount)}</td>
+                                <td>{renderBooleanIcon(student.paymentState)}</td>
+                                <td>
+                                    <button className="btn btn-outline-primary btn-sm ms-2 me-2"
+                                            onClick={() => aboutStudent(student.id)}
+                                            title="View student details">
+                                        <i className="bi bi-person-lines-fill"></i>
+                                    </button>
+                                    <button className="btn btn-outline-secondary btn-sm me-2"
+                                            onClick={() => editStudent(student.id)}
+                                            title="Edit student">
+                                        <i className="bi bi-pencil"></i>
+                                    </button>
+                                    <button className="btn btn-outline-danger btn-sm"
+                                            onClick={() => deleteStudent(student.id)}
+                                            title="Delete student">
+                                        <i className="bi bi-trash"></i>
+                                    </button>
+                                </td>
                             </tr>)
                     }
                     </tbody>
